@@ -24,21 +24,22 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Border BorderBrush="Gray" BorderThickness="1">
-                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Border Grid.Row="0" Grid.Column="0" BorderBrush="Gray" BorderThickness="1">
+                    <StackPanel Orientation="Horizontal">
                         <TextBlock Grid.Column="0" Padding="0,0,10,0">Kaffe</TextBlock>
                         <TextBlock x:Name="price">49</TextBlock>
                         <TextBlock>kr</TextBlock>
                     </StackPanel>
                 </Border>
-                <Grid Grid.Row="0" x:Name="row1" Grid.Column="1" Width="Auto">
+                
+                <Grid Grid.Row="0" Grid.Column="1" Width="Auto">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0" x:Name="minusButton" MinHeight="20" Width="{Binding ActualHeight, ElementName=minusButton, Mode=OneWay}">-</Button>
+                    <Button Grid.Column="0" x:Name="minusButton" MinHeight="20" Click="editCoffeeAmount" Width="{Binding ActualHeight, ElementName=minusButton, Mode=OneWay}">-</Button>
                     <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1">
                         <TextBlock x:Name="amount" Width="Auto">0</TextBlock>
                     </Border>

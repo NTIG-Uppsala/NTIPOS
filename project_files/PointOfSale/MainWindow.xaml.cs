@@ -25,5 +25,10 @@ namespace PointOfSale
         {
 
         }
+
+        private void editCoffeeAmount(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
