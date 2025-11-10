@@ -18,24 +18,30 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+                
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Orientation="Horizontal">
-                    <TextBlock Grid.Column="0" Padding="10,0">Kaffe</TextBlock>
-                    <TextBlock x:Name="price">49</TextBlock>
-                    <TextBlock>kr</TextBlock>
-                </StackPanel>
+
+                <Border BorderBrush="Gray" BorderThickness="1">
+                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                        <TextBlock Grid.Column="0" Padding="0,0,10,0">Kaffe</TextBlock>
+                        <TextBlock x:Name="price">49</TextBlock>
+                        <TextBlock>kr</TextBlock>
+                    </StackPanel>
+                </Border>
                 <Grid Grid.Row="0" x:Name="row1" Grid.Column="1" Width="Auto">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <Button Grid.Column="0" x:Name="minusButton" MinHeight="20" Width="{Binding ActualHeight, ElementName=minusButton, Mode=OneWay}">-</Button>
-                    <TextBlock Grid.Column="1" x:Name="amount" Width="Auto">0</TextBlock>
+                    <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1">
+                        <TextBlock x:Name="amount" Width="Auto">0</TextBlock>
+                    </Border>
                     <Button Grid.Column="2" x:Name="plusButton" MinHeight="20" Width="{Binding ActualHeight, ElementName=plusButton, Mode=OneWay}">+</Button>
                 </Grid>
             </Grid>
