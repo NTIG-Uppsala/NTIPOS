@@ -22,8 +22,11 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-
-                <Label Grid.Row="0" Grid.Column="0" Padding="10,0">Kaffe</Label>
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <TextBlock Grid.Column="0" Padding="10,0">Kaffe</TextBlock>
+                    <TextBlock x:Name="price">49</TextBlock>
+                    <TextBlock>kr</TextBlock>
+                </StackPanel>
                 <Grid Grid.Row="0" x:Name="row1" Grid.Column="1" Width="Auto">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -32,7 +35,7 @@
                     </Grid.ColumnDefinitions>
                     
                     <Button Grid.Column="0" x:Name="minusButton" MinHeight="20" Width="{Binding ActualHeight, ElementName=minusButton, Mode=OneWay}">-</Button>
-                    <TextBox Grid.Column="1" x:Name="amount" Width="Auto">0</TextBox>
+                    <TextBlock Grid.Column="1" x:Name="amount" Width="Auto">0</TextBlock>
                     <Button Grid.Column="2" x:Name="plusButton" MinHeight="20" Width="{Binding ActualHeight, ElementName=plusButton, Mode=OneWay}">+</Button>
                 </Grid>
             </Grid>
@@ -45,9 +48,9 @@
                 </Grid.ColumnDefinitions>
                 
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
-                    <TextBox>Total Summa:</TextBox>
-                    <TextBox x:Name="totalSum">0</TextBox>
-                    <TextBox>kr</TextBox>
+                    <TextBlock Margin="0,0,5,0">Total Summa:</TextBlock>
+                    <TextBlock x:Name="totalSum">0</TextBlock>
+                    <TextBlock>kr</TextBlock>
                 </StackPanel>
 
                 <Button Grid.Column="1" x:Name="resetButton">Nollställ</Button>
