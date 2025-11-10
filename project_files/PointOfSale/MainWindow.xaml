@@ -33,7 +33,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <Button Grid.Column="0" x:Name="minusButton" MinHeight="20" Width="{Binding ActualHeight, ElementName=minusButton, Mode=OneWay}">-</Button>
                     <TextBlock Grid.Column="1" x:Name="amount" Width="Auto">0</TextBlock>
                     <Button Grid.Column="2" x:Name="plusButton" MinHeight="20" Width="{Binding ActualHeight, ElementName=plusButton, Mode=OneWay}">+</Button>
@@ -46,7 +46,7 @@
                     <ColumnDefinition Width="5*"/>
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
                     <TextBlock Margin="0,0,5,0">Total Summa:</TextBlock>
                     <TextBlock x:Name="totalSum">0</TextBlock>
