@@ -5,8 +5,53 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PointOfSale"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="200" Width="200">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
+        <ContentControl Grid.Row="0" x:Name="products" Width="auto" Height="Auto">
+            <Grid x:Name="productsGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Padding="10,0">Kaffe</Label>
+                <Grid Grid.Row="0" x:Name="row1" Grid.Column="1" Width="Auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Button Grid.Column="0" x:Name="minusButton" MinHeight="20" Width="{Binding ActualHeight, ElementName=minusButton, Mode=OneWay}">-</Button>
+                    <TextBox Grid.Column="1" x:Name="amount" Width="Auto">0</TextBox>
+                    <Button Grid.Column="2" x:Name="plusButton" MinHeight="20" Width="{Binding ActualHeight, ElementName=plusButton, Mode=OneWay}">+</Button>
+                </Grid>
+            </Grid>
+        </ContentControl>
+        <ContentControl Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <TextBox>Total Summa:</TextBox>
+                    <TextBox x:Name="totalSum">0</TextBox>
+                    <TextBox>kr</TextBox>
+                </StackPanel>
+
+                <Button Grid.Column="1" x:Name="resetButton">Nollställ</Button>
+            </Grid>
+        </ContentControl>
     </Grid>
 </Window>
