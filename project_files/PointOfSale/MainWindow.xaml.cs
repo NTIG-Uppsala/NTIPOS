@@ -26,9 +26,31 @@ namespace PointOfSale
 
         }
 
-        private void editCoffeeAmount(object sender, RoutedEventArgs e)
+        private void EditCoffeeAmount(object sender, RoutedEventArgs e)
         {
+            int change = 0;
+            int amountInt = 0;
 
+            if (!(sender == resetButton))
+            {
+                string changeString = $"{(sender as Button).Content}1";
+                change = Convert.ToInt32(changeString);
+                amountInt = Convert.ToInt32(amount.Text);
+            }
+
+            if (!(amountInt + change < 0))
+            {
+                int newAmountInt = amountInt + change;
+                amount.Text = Convert.ToString(newAmountInt);
+                UpdateTotalSum(newAmountInt);
+            }
+        }
+
+        private void UpdateTotalSum(int newAmountInt)
+        {
+            int singlePrice = Convert.ToInt32(price.Text);
+            int totalPrice = singlePrice * newAmountInt;
+            totalSum.Text = Convert.ToString(totalPrice);
         }
     }
 }
