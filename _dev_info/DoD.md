@@ -5,6 +5,7 @@
 - All features are documented.
 - All debug code is removed.  
 - All placeholders are removed.
+- Tests exist for all testable features. 
 - All tests pass.  
 - Everyone present in the group have reviewed the code, made sure they understand it, and ensured that it follows our coding standards.  
 
