@@ -70,11 +70,21 @@
                             <RowDefinition Height="2*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-
+                        <Border Name="mask" Grid.Row="1" CornerRadius="20" Background="#adadad" Width="204"/>
                         <StackPanel Grid.Row="1" Orientation="Horizontal">
-                            <Button Width="250" FontWeight="Bold" Background="Red">Avbryt Köp</Button>
+                            <Button Width="250" FontWeight="Bold" Background="Red">
+                                Avbryt Köp
+                                <Button.OpacityMask>
+                                    <VisualBrush Visual="{Binding ElementName=mask}"/>
+                                </Button.OpacityMask>
+                            </Button>
                             <ContentControl Width="10"></ContentControl>
-                            <Button Width="250" FontWeight="Bold" Background="Green">Köp</Button>
+                            <Button Width="250" FontWeight="Bold" Background="Green">
+                                Köp
+                                <Button.OpacityMask>
+                                    <VisualBrush Visual="{Binding ElementName=mask}"/>
+                                </Button.OpacityMask>
+                            </Button>
                         </StackPanel>
                     </Grid>
                 </ContentControl>
