@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PointOfSale"
+        xmlns:UserControls="clr-namespace:PointOfSale.View.UserControls"
         mc:Ignorable="d"
         Title="MainWindow" Height="900" Width="1100">
     <Grid Margin="20">
@@ -13,82 +14,9 @@
         </Grid.ColumnDefinitions>
         
         <!-- PRODUCTS -->
-        <ContentControl Grid.Column="0">
-
-        </ContentControl>
+        <UserControls:Products Grid.Column="0"/>
 
         <!-- BASKET AND BUTTONS -->
-        <ContentControl Grid.Column="1">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="5*"/>
-                    <RowDefinition Height="4*"/>
-                </Grid.RowDefinitions>
-
-                <!-- BASKET CONTAINER -->
-                <ContentControl Grid.Row="0">
-                    <Border BorderBrush="Black" BorderThickness="2" Margin="80,0,20,0">
-                        <Grid Background="White">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
-
-                            <!-- ACTUAL BASKET -->
-                            <ContentControl Grid.Row="0">
-                                <Line
-                                    X1="330" Y1="0"
-                                    X2="330" Y2="500"
-                                    Stroke="Black"
-                                    StrokeThickness="1"
-                                    />
-                            </ContentControl>
-
-                            <!-- SUM -->
-                            <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="auto"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <TextBlock Grid.Column="0" Margin="5,0,0,0">Summa:</TextBlock>
-                                    <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                        <TextBlock>10</TextBlock>
-                                        <TextBlock Margin="0,0,5,0">kr</TextBlock>
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
-                        </Grid>
-                    </Border>
-                </ContentControl>
-
-                <ContentControl Grid.Row="1" Margin="10">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="2*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Border Name="mask" Grid.Row="1" CornerRadius="20" Background="#adadad" Width="204"/>
-                        <StackPanel Grid.Row="1" Orientation="Horizontal">
-                            <Button Width="250" FontWeight="Bold" Background="Red">
-                                Avbryt Köp
-                                <Button.OpacityMask>
-                                    <VisualBrush Visual="{Binding ElementName=mask}"/>
-                                </Button.OpacityMask>
-                            </Button>
-                            <ContentControl Width="10"></ContentControl>
-                            <Button Width="250" FontWeight="Bold" Background="Green">
-                                Köp
-                                <Button.OpacityMask>
-                                    <VisualBrush Visual="{Binding ElementName=mask}"/>
-                                </Button.OpacityMask>
-                            </Button>
-                        </StackPanel>
-                    </Grid>
-                </ContentControl>
-            </Grid>
-        </ContentControl>
+        <UserControls:BasketAndButtonPanel Grid.Column="1"/>
     </Grid>
 </Window>

@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="PointOfSale.View.UserControls.ButtonPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PointOfSale.View.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <ContentControl Margin="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Name="mask" Grid.Row="1" CornerRadius="20" Background="#adadad" Width="204"/>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <Button Width="250" FontWeight="Bold" Background="Red">
+                    Avbryt Köp
+                    <Button.OpacityMask>
+                        <VisualBrush Visual="{Binding ElementName=mask}"/>
+                    </Button.OpacityMask>
+                </Button>
+                <ContentControl Width="10"></ContentControl>
+                <Button Width="250" FontWeight="Bold" Background="Green">
+                    Köp
+                    <Button.OpacityMask>
+                        <VisualBrush Visual="{Binding ElementName=mask}"/>
+                    </Button.OpacityMask>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </ContentControl>
+</UserControl>

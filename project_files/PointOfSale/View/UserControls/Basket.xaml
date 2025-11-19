@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="PointOfSale.View.UserControls.Basket"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PointOfSale.View.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <ContentControl>
+        <Border BorderBrush="Black" BorderThickness="2" Margin="80,0,20,0">
+            <Grid Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- ACTUAL BASKET -->
+                <ContentControl Grid.Row="0">
+                    <Line
+                    X1="330" Y1="0"
+                    X2="330" Y2="500"
+                    Stroke="Black"
+                    StrokeThickness="1"
+                    />
+                </ContentControl>
+
+                <!-- SUM -->
+                <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Margin="5,0,0,0">Summa:</TextBlock>
+                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                            <TextBlock>10</TextBlock>
+                            <TextBlock Margin="0,0,5,0">kr</TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </ContentControl>
+</UserControl>
