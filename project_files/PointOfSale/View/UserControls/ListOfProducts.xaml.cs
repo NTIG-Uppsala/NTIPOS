@@ -23,6 +23,18 @@ namespace PointOfSale.View.UserControls
         public ListOfProducts()
         {
             InitializeComponent();
+            foreach (Products.Product product in CategoryProductsList)
+            {
+                GUIButton productButton = new()
+                {
+                    Title = product.Name,
+                    Price = $"{product.Price}kr",
+                    Color = CategoryColor
+                };
+            }
         }
+
+        public List<Products.Product> CategoryProductsList { get; set; }
+        public Brush CategoryColor { get; set; }
     }
 }

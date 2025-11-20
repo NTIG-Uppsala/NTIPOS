@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,9 +21,13 @@ namespace PointOfSale.View.UserControls
     /// Interaction logic for Products.xaml
     /// </summary>
     public partial class Products : UserControl
+
     {
+        public static Products ProductsClass { get; set; }
         public Products()
         {
+            ProductsClass = this;
+
             /// Products List
             List<ProductCategory> categoryList =
             [
@@ -55,23 +60,7 @@ namespace PointOfSale.View.UserControls
             ];
 
             InitializeComponent();
-
-            foreach (ProductCategory category in categoryList)
-            {
-                CategoryButton categoryButton = new()
-                {
-                    CategoryColor = category.Color,
-                    CategoryName = category.Name
-                };
-
-                ListOfProducts listOfProducts = new() 
-                { 
-                    Name = category.Key
-                };
-
-                productCategories.Children.Add(categoryButton);
-                productsGrid.Children.Add(listOfProducts);
-            }
+            TJOSAN.ItemsSource = categoryList;
         }
 
         public class ProductCategory

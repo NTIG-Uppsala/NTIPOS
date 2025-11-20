@@ -12,14 +12,17 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Name="productCategories" Grid.Row="0" Orientation="Horizontal">
-            <StackPanel.Resources>
-                <Style TargetType="{x:Type local:CategoryButton}">
-                    <Setter Property="Margin" Value="0,0,10,0"/>
-                </Style>
-            </StackPanel.Resources>
-        </StackPanel>
-
-        <local:ListOfProducts Grid.Row="1"/>
+        <ItemsControl Name="TJOSAN">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:CategoryButton CategoryName="{Binding Name}" CategoryColor="{Binding Color}" CategoryKey="{Binding Key}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>        
     </Grid>
 </UserControl>

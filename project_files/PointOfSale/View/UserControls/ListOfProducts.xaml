@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:PointOfSale.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <WrapPanel>
+    <WrapPanel Name="productsPanel">
         <WrapPanel.Resources>
             <Style TargetType="{x:Type TextBlock}">
                 <Setter Property="Margin" Value="0,0,10,0"/>

@@ -41,6 +41,8 @@ namespace PointOfSale.View.UserControls
             }
         }
 
+        public string CategoryKey { get; set; }
+
         private Brush categoryColor;
 
         public Brush CategoryColor
@@ -59,7 +61,8 @@ namespace PointOfSale.View.UserControls
 
         private void categoryButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            ListOfProducts listOfProducts = (ListOfProducts) Products.ProductsClass.productsGrid.FindName(CategoryKey);
+            listOfProducts.Visibility = Visibility.Visible;
         }
     }
 }
