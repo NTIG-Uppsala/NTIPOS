@@ -10,7 +10,7 @@
         <!-- mask for rounded corners-->
         <Border Name="mask" Grid.Row="1" CornerRadius="20" Background="white" />
 
-        <Button FontWeight="Bold" >
+        <Button Name="GUIbtn" FontWeight="Bold" >
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="Background" Value="{Binding Color}"/>

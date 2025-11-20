@@ -14,9 +14,9 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <UserControls:GUIButton Width="240" Color="Red" Label="Avbryt Köp" />
+                <UserControls:GUIButton x:Name="abortButton" Click="abortButton_Click" Width="240" Color="Red" Label="Avbryt Köp" />
                 <ContentControl Width="10"></ContentControl>
-                <UserControls:GUIButton Width="240" Color="Green" Label="Köp" />
+                <UserControls:GUIButton x:Name="buyButton" Click="buyButton_Click" Width="240" Color="Green" Label="Köp" />
             </StackPanel>
         </Grid>
     </ContentControl>
