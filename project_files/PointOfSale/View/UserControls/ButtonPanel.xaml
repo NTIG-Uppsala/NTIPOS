@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PointOfSale.View.UserControls"
+             xmlns:UserControls="clr-namespace:PointOfSale.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <ContentControl Margin="10">
@@ -12,21 +13,10 @@
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Border Name="mask" Grid.Row="1" CornerRadius="20" Background="#adadad" Width="204"/>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <Button Width="250" FontWeight="Bold" Background="Red">
-                    Avbryt Köp
-                    <Button.OpacityMask>
-                        <VisualBrush Visual="{Binding ElementName=mask}"/>
-                    </Button.OpacityMask>
-                </Button>
+                <UserControls:GUIButton x:Name="abortButton" Click="abortButton_Click" Width="240" Color="Red" Label="Avbryt Köp" />
                 <ContentControl Width="10"></ContentControl>
-                <Button Width="250" FontWeight="Bold" Background="Green">
-                    Köp
-                    <Button.OpacityMask>
-                        <VisualBrush Visual="{Binding ElementName=mask}"/>
-                    </Button.OpacityMask>
-                </Button>
+                <UserControls:GUIButton x:Name="buyButton" Click="buyButton_Click" Width="240" Color="Green" Label="Köp" />
             </StackPanel>
         </Grid>
     </ContentControl>
