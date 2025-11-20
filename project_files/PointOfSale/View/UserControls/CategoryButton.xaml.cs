@@ -56,5 +56,10 @@ namespace PointOfSale.View.UserControls
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private void categoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

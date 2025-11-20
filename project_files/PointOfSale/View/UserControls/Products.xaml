@@ -6,26 +6,20 @@
              xmlns:local="clr-namespace:PointOfSale.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid Name="productsGrid" x:FieldModifier="public">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
+        <StackPanel Name="productCategories" Grid.Row="0" Orientation="Horizontal">
             <StackPanel.Resources>
                 <Style TargetType="{x:Type local:CategoryButton}">
                     <Setter Property="Margin" Value="0,0,10,0"/>
                 </Style>
             </StackPanel.Resources>
-            <local:CategoryButton CategoryName="Tobak" CategoryColor="SaddleBrown"/>
-            <local:CategoryButton CategoryName="Godis" CategoryColor="LightPink"/>
-            <local:CategoryButton CategoryName="Mat" CategoryColor="Orange"/>
-            <local:CategoryButton CategoryName="Tidningar" CategoryColor="LightBlue"/>
         </StackPanel>
 
-        <WrapPanel>
-            
-        </WrapPanel>
+        <local:ListOfProducts Grid.Row="1"/>
     </Grid>
 </UserControl>
