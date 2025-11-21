@@ -15,7 +15,7 @@
                 </Grid.RowDefinitions>
 
                 <!-- ACTUAL BASKET -->
-                <ContentControl Grid.Row="0">
+                <ContentControl Grid.Row="0" Panel.ZIndex="1">
                     <Line
                     X1="330" Y1="0"
                     X2="330" Y2="500"
@@ -23,7 +23,7 @@
                     StrokeThickness="1"
                     />
                 </ContentControl>
-                <ListView Name="articleList"></ListView>
+                <ListView Name="ArticleList"></ListView>
 
                 <!-- SUM -->
                 <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1">
