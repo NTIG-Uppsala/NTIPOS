@@ -43,7 +43,7 @@
                                 </Border.Style>
                             </Border>
 
-                            <Button Name="ProductButton" FontWeight="Bold" Height="82" FontSize="18" Width="160">
+                            <Button Name="ProductButton" FontWeight="Bold" Height="82" FontSize="18" Width="160" Click="ProductButton_Click">
                                 <Button.Style>
                                     <Style TargetType="Button">
                                         <Setter Property="Background" Value="{Binding Color}"/>

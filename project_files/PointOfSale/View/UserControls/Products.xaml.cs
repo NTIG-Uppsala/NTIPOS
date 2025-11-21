@@ -1,4 +1,5 @@
 ﻿using PointOfSale.ViewModel;
+using PointOfSale.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,6 +29,11 @@ namespace PointOfSale.View.UserControls
         {
             InitializeComponent();
             DataContext = new ProductsViewModel();
+        }
+
+        private void ProductButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
