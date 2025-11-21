@@ -28,11 +28,7 @@
             <Button.OpacityMask>
                 <VisualBrush Visual="{Binding ElementName=mask}"/>
             </Button.OpacityMask>
-            <Grid >
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Label}"/>
-                <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Text="{Binding Title}"/>
-                <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Right" Text="{Binding Price}"/>
-            </Grid>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Label}"/>
         </Button>
     </Grid>
 </UserControl>
