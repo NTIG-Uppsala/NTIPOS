@@ -23,6 +23,7 @@
                     StrokeThickness="1"
                     />
                 </ContentControl>
+                <ListView Name="articleList"></ListView>
 
                 <!-- SUM -->
                 <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1">
