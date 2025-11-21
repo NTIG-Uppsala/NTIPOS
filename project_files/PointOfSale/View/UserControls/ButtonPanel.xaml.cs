@@ -25,12 +25,12 @@ namespace PointOfSale.View.UserControls
             InitializeComponent();
         }
 
-        private void abortButton_Click(object sender, RoutedEventArgs e)
+        private void AbortButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void buyButton_Click(object sender, RoutedEventArgs e)
+        private void CheckoutButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
