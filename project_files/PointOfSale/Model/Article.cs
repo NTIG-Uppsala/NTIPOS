@@ -8,14 +8,18 @@ namespace PointOfSale.Model
 {
     public class Article
     {
-        public Product Item
+        public Product Product
         { get; set; }
-        public int Amount
+        public int Quantity
+        { get; set; }
+        public int Sum
         { get; set; }
 
-        public Article(Product productItem)
+        public Article(Product product)
         {
-            Item = productItem;
+            Product = product;
+            Quantity = 1;
+            Sum = Product.Price * Quantity;
         }
     }
 }
