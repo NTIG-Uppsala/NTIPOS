@@ -33,7 +33,7 @@ namespace PointOfSale.View.UserControls
 
         private void ProductButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ArticlesViewModel.Articles.Add(new Article((sender as FrameworkElement).DataContext as Product));
         }
     }
 }

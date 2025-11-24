@@ -1,4 +1,5 @@
 ﻿using PointOfSale.Model;
+using PointOfSale.View.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,11 +11,16 @@ namespace PointOfSale.ViewModel
 {
     public class ArticlesViewModel
     {
-        public ObservableCollection<Article> Articles { get; set; }
+        public static ObservableCollection<Article> Articles { get; set; }
 
         public ArticlesViewModel()
         {
+            Articles = new ObservableCollection<Article> { };
+        }
 
+        public void AddProduct(Product product)
+        {
+            Articles.Add(new Article(product));
         }
     }
 }
