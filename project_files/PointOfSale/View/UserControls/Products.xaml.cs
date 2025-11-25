@@ -23,7 +23,7 @@ namespace PointOfSale.View.UserControls
     /// <summary>
     /// Interaction logic for Products.xaml
     /// </summary>
-    public partial class Products : UserControl
+    public partial class Products
     {
         public Products()
         {
@@ -33,7 +33,7 @@ namespace PointOfSale.View.UserControls
 
         private void ProductButton_Click(object sender, RoutedEventArgs e)
         {
-            ArticlesViewModel.Articles.Add(new Article((sender as FrameworkElement).DataContext as Product));
+            ArticlesViewModel.ArticlesVM.AddProduct((sender as FrameworkElement).DataContext as Product);
         }
     }
 }

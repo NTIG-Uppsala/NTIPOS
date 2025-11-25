@@ -22,11 +22,10 @@ namespace PointOfSale.View.UserControls
     /// </summary>
     public partial class Basket : UserControl
     {
-        ArticlesViewModel articlesVm = new ArticlesViewModel();
         public Basket()
         {
             InitializeComponent();
-            DataContext = articlesVm;
+            DataContext = ArticlesViewModel.ArticlesVM;
         }
     }
 }

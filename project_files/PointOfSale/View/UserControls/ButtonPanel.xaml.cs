@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PointOfSale.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,12 +28,12 @@ namespace PointOfSale.View.UserControls
 
         private void AbortButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ArticlesViewModel.ArticlesVM.ClearBasket();
         }
 
         private void CheckoutButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ArticlesViewModel.ArticlesVM.ClearBasket();
         }
     }
 }
