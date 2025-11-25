@@ -15,7 +15,7 @@
 
             <!-- ACTUAL BASKET -->
             <Grid>
-                <ListView ItemsSource="{Binding Articles}">
+                <ListView Name="ArticlesView" ItemsSource="{Binding Articles}">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -33,16 +33,16 @@
                                     <RowDefinition/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
-                                <TextBlock TextWrapping="Wrap" Text="{Binding Product.Name}"/>
+                                <TextBlock Name="ArticleName" TextWrapping="Wrap" Text="{Binding Product.Name}"/>
                                 <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 0 5 0">
-                                    <TextBlock Text="{Binding Quantity}"/>
+                                    <TextBlock Name="ArticleQuantity" Text="{Binding Quantity}"/>
                                     <TextBlock Text=" x "/>
                                     <TextBlock Text="{Binding Product.Price}"/>
                                     <TextBlock Text=" kr"/>
                                 </StackPanel>
                                 <Border Grid.Column="1">
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock DockPanel.Dock="Right" Text="{Binding Sum}"/>
+                                        <TextBlock Name="ArticleSum" DockPanel.Dock="Right" Text="{Binding Sum}"/>
                                         <TextBlock DockPanel.Dock="Right" Text=" kr"/>
                                     </StackPanel>
                                 </Border>
@@ -63,7 +63,7 @@
 
                     <TextBlock Grid.Column="0" Margin="5,0,0,0">Summa:</TextBlock>
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
-                        <TextBlock Text="{Binding TotalSum}"/>
+                        <TextBlock Name="TotalSum" Text="{Binding TotalSum}"/>
                         <TextBlock Text=" kr" Margin="0,0,5,0"/>
                     </StackPanel>
                 </Grid>
