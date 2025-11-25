@@ -46,7 +46,7 @@
                             <Button Name="ProductButton" FontWeight="Bold" Height="82" FontSize="18" Width="160" Click="ProductButton_Click">
                                 <Button.Style>
                                     <Style TargetType="Button">
-                                        <Setter Property="Background" Value="{Binding Color}"/>
+                                        <Setter Property="Background" Value="Transparent"/>
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="{x:Type Button}">
