@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PointOfSale.Model;
+using PointOfSale.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,7 @@ namespace PointOfSale.View.UserControls
         public Basket()
         {
             InitializeComponent();
+            DataContext = ArticlesViewModel.ArticlesVM;
         }
     }
 }

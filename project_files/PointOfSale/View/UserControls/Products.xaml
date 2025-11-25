@@ -6,7 +6,66 @@
              xmlns:local="clr-namespace:PointOfSale.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <ContentControl>
+    <Grid Name="productsGrid" x:FieldModifier="public">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-    </ContentControl>
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Products}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="3">
+                            <!-- mask for rounded corners-->
+                            <Border Name="mask" Grid.Row="1" CornerRadius="20">
+                                <Border.Style>
+                                    <Style>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Category}" Value="Tobak">
+                                                <Setter Property="Border.Background" Value="SaddleBrown"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Category}" Value="Godis">
+                                                <Setter Property="Border.Background" Value="LightPink"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Category}" Value="Enkel mat">
+                                                <Setter Property="Border.Background" Value="Orange"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Category}" Value="Tidningar">
+                                                <Setter Property="Border.Background" Value="LightBlue"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+
+                            <Button Name="ProductButton" FontWeight="Bold" Height="82" FontSize="18" Width="160" Click="ProductButton_Click">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background" Value="{Binding Color}"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                                        <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Button.Style>
+                                <Grid Margin="5">
+                                    <TextBlock TextWrapping="WrapWithOverflow" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Name}"/>
+                                </Grid>
+                            </Button>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

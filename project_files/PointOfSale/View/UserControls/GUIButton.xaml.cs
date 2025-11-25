@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -42,7 +43,7 @@ namespace PointOfSale.View.UserControls
             set
             {
                 color = value;
-                NotifyPropertyChanged("Color");
+                NotifyPropertyChanged();
             }
         }
 
@@ -52,7 +53,7 @@ namespace PointOfSale.View.UserControls
             set
             {
                 label = value;
-                NotifyPropertyChanged("Label");
+                NotifyPropertyChanged();
             }
         }
         
@@ -62,7 +63,7 @@ namespace PointOfSale.View.UserControls
             set
             {
                 title = value;
-                NotifyPropertyChanged("Title");
+                NotifyPropertyChanged();
             }
         }
 
@@ -72,16 +73,13 @@ namespace PointOfSale.View.UserControls
             set
             {
                 price = value;
-                NotifyPropertyChanged("Price");
+                NotifyPropertyChanged();
             }
         }
 
-        public void NotifyPropertyChanged(string propertyName)
+        public void NotifyPropertyChanged( [CallerMemberName] string? propertyName = null)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public event RoutedEventHandler Click

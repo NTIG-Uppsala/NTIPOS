@@ -6,41 +6,68 @@
              xmlns:local="clr-namespace:PointOfSale.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <ContentControl>
-        <Border BorderBrush="Black" BorderThickness="2" Margin="80,0,20,0">
-            <Grid Background="White">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
+    <Border BorderBrush="Black" BorderThickness="2" Margin="80,0,20,0">
+        <Grid Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-                <!-- ACTUAL BASKET -->
-                <ContentControl Grid.Row="0">
-                    <Line
-                    X1="330" Y1="0"
-                    X2="330" Y2="500"
-                    Stroke="Black"
-                    StrokeThickness="1"
-                    />
-                </ContentControl>
-
-                <!-- SUM -->
-                <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Grid.Column="0" Margin="5,0,0,0">Summa:</TextBlock>
-                        <StackPanel Grid.Column="2" Orientation="Horizontal">
-                            <TextBlock>10</TextBlock>
-                            <TextBlock Margin="0,0,5,0">kr</TextBlock>
-                        </StackPanel>
-                    </Grid>
-                </Border>
+            <!-- ACTUAL BASKET -->
+            <Grid>
+                <ListView ItemsSource="{Binding Articles}">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="FontSize" Value="20"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Product.Name}"/>
+                                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 0 5 0">
+                                    <TextBlock Text="{Binding Quantity}"/>
+                                    <TextBlock Text=" x "/>
+                                    <TextBlock Text="{Binding Product.Price}"/>
+                                    <TextBlock Text=" kr"/>
+                                </StackPanel>
+                                <Border Grid.Column="1">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock DockPanel.Dock="Right" Text="{Binding Sum}"/>
+                                        <TextBlock DockPanel.Dock="Right" Text=" kr"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
-        </Border>
-    </ContentControl>
+
+            <!-- SUM -->
+            <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Margin="5,0,0,0">Summa:</TextBlock>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                        <TextBlock Text="{Binding TotalSum}"/>
+                        <TextBlock Text=" kr" Margin="0,0,5,0"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
 </UserControl>
