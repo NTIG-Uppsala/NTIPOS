@@ -28,7 +28,7 @@ namespace PointOfSale.ViewModel
                 new ("Kexchoklad", "Godis", 12),
                 new ("Malaco Gott & Blandat 160 g", "Godis", 28),
 
-                new ("Korv med bröd", "Enkel mat", 89),
+                new ("Korv med bröd", "Enkel mat", 25),
                 new ("Varm toast (ost & skinka)", "Enkel mat", 30),
                 new ("Pirog (köttfärs)", "Enkel mat", 22),
                 new ("Färdig sallad (kyckling)", "Enkel mat", 49),

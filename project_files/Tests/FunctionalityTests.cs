@@ -32,89 +32,97 @@ namespace Tests
         [TestMethod]
         public void TestInitialState()
         {
-            TextBox coffeeAmountBox = mainWindow.FindFirstDescendant(cf.ByAutomationId("amount")).AsTextBox();
-            TextBox totalSumBox = mainWindow.FindFirstDescendant(cf.ByAutomationId("totalSum")).AsTextBox();
+            var totalSumBox = mainWindow.FindFirstDescendant(cf.ByAutomationId("TotalSum"));
+            var articlesView = mainWindow.FindFirstDescendant(cf.ByAutomationId("ArticlesView"));
 
-            Assert.AreEqual("0", coffeeAmountBox.Name);
             Assert.AreEqual("0", totalSumBox.Name);
+            Assert.AreEqual(null, articlesView.FindFirstDescendant(cf.ByClassName("ListBoxItem")));
         }
 
         [TestMethod]
-        public void TestAddCoffee()
+        public void TestAddKexchoklad()
         {
-            Button addCoffeeButton = mainWindow.FindFirstDescendant(cf.ByName("+")).AsButton();
-            TextBox coffeeAmountBox = mainWindow.FindFirstDescendant(cf.ByAutomationId("amount")).AsTextBox();
-            TextBox totalSumBox = mainWindow.FindFirstDescendant(cf.ByAutomationId("totalSum")).AsTextBox();
-            
-            Assert.AreEqual("0", coffeeAmountBox.Name);
+            var totalSumBox = mainWindow.FindFirstDescendant(cf.ByAutomationId("TotalSum"));
+            var addProductButton = mainWindow.FindFirstDescendant(cf.ByName("Kexchoklad"));
+            var articlesView = mainWindow.FindFirstDescendant(cf.ByAutomationId("ArticlesView"));
+            var firstArticle = articlesView.FindFirstDescendant(cf.ByClassName("ListBoxItem"));
+
+
             Assert.AreEqual("0", totalSumBox.Name);
+            Assert.AreEqual(null, articlesView.FindFirstDescendant(cf.ByClassName("ListBoxItem")));
 
-            addCoffeeButton.Click();
+            addProductButton.Click();
 
-            Assert.AreEqual("1", coffeeAmountBox.Name);
-            Assert.AreEqual("49", totalSumBox.Name);
+            Assert.AreEqual("12", totalSumBox.Name);
         }
 
         [TestMethod]
-        public void TestRemoveCoffee()
+        public void TestAddManyKexchoklad()
         {
-            Button addCoffeeButton = mainWindow.FindFirstDescendant(cf.ByName("+")).AsButton();
-            Button removeCoffeeButton = mainWindow.FindFirstDescendant(cf.ByName("-")).AsButton();
-            TextBox coffeeAmountBox = mainWindow.FindFirstDescendant(cf.ByAutomationId("amount")).AsTextBox();
-            TextBox totalSumBox = mainWindow.FindFirstDescendant(cf.ByAutomationId("totalSum")).AsTextBox();
+            var totalSumBox = mainWindow.FindFirstDescendant(cf.ByAutomationId("TotalSum"));
+            var addProductButton = mainWindow.FindFirstDescendant(cf.ByName("Kexchoklad"));
+            var articlesView = mainWindow.FindFirstDescendant(cf.ByAutomationId("ArticlesView"));
+            var firstArticle = articlesView.FindFirstDescendant(cf.ByClassName("ListBoxItem"));
 
-            addCoffeeButton.Click();
-
-            Assert.AreEqual("1", coffeeAmountBox.Name);
-            Assert.AreEqual("49", totalSumBox.Name);
-
-            removeCoffeeButton.Click();
-
-            Assert.AreEqual("0", coffeeAmountBox.Name);
             Assert.AreEqual("0", totalSumBox.Name);
+            Assert.AreEqual(null, articlesView.FindFirstDescendant(cf.ByClassName("ListBoxItem")));
 
-            removeCoffeeButton.Click();
+            for (int i = 0; i < 10; i++)
+            {
+                addProductButton.Click();
+            }
 
-            Assert.AreEqual("0", coffeeAmountBox.Name);
-            Assert.AreEqual("0", totalSumBox.Name);
-        }
-
-        [TestMethod]
-        public void TestAddManyCoffee()
-        {
-            Button addCoffeeButton = mainWindow.FindFirstDescendant(cf.ByName("+")).AsButton();
-            TextBox coffeeAmountBox = mainWindow.FindFirstDescendant(cf.ByAutomationId("amount")).AsTextBox();
-            TextBox totalSumBox = mainWindow.FindFirstDescendant(cf.ByAutomationId("totalSum")).AsTextBox();
-            
-            Assert.AreEqual("0", coffeeAmountBox.Name);
-            Assert.AreEqual("0", totalSumBox.Name);
-
-            addCoffeeButton.Click();
-            addCoffeeButton.Click();
-            addCoffeeButton.Click();
-            addCoffeeButton.Click();
-            addCoffeeButton.Click();
-
-            Assert.AreEqual("5", coffeeAmountBox.Name);
-            Assert.AreEqual("245", totalSumBox.Name);
+            Assert.AreEqual("120", totalSumBox.Name);
         }
 
         [TestMethod]
         public void TestResetTotal()
         {
-            Button addCoffeeButton = mainWindow.FindFirstDescendant(cf.ByName("+")).AsButton();
-            Button resetButton = mainWindow.FindFirstDescendant(cf.ByAutomationId("resetButton")).AsButton();
-            TextBox coffeeAmountBox = mainWindow.FindFirstDescendant(cf.ByAutomationId("amount")).AsTextBox();
-            TextBox totalSumBox = mainWindow.FindFirstDescendant(cf.ByAutomationId("totalSum")).AsTextBox();
-            
-            addCoffeeButton.Click();
+            var totalSumBox = mainWindow.FindFirstDescendant(cf.ByAutomationId("TotalSum"));
+            var addProductButton = mainWindow.FindFirstDescendant(cf.ByName("Kexchoklad"));
+            var articlesView = mainWindow.FindFirstDescendant(cf.ByAutomationId("ArticlesView"));
+            var firstArticle = articlesView.FindFirstDescendant(cf.ByClassName("ListBoxItem"));
+            var resetButton = mainWindow.FindFirstDescendant(cf.ByAutomationId("AbortButton"));
 
-            Assert.AreEqual("1", coffeeAmountBox.Name);
-            Assert.AreEqual("49", totalSumBox.Name);
+            Assert.AreEqual("0", totalSumBox.Name);
+            Assert.AreEqual(null, articlesView.FindFirstDescendant(cf.ByClassName("ListBoxItem")));
+
+            for (int i = 0; i < 10; i++)
+            {
+                addProductButton.Click();
+            }
+
+            Assert.AreEqual("120", totalSumBox.Name);
 
             resetButton.Click();
             
-            Assert.AreEqual("0", coffeeAmountBox.Name);
+            Assert.AreEqual("0", totalSumBox.Name);
+        }
+
+        [TestMethod]
+        public void TestAddDifferentProducts()
+        {
+            var totalSumBox = mainWindow.FindFirstDescendant(cf.ByAutomationId("TotalSum"));
+            var addProductButton1 = mainWindow.FindFirstDescendant(cf.ByName("Kexchoklad"));
+            var addProductButton2 = mainWindow.FindFirstDescendant(cf.ByName("Korv med bröd"));
+            var addProductButton3 = mainWindow.FindFirstDescendant(cf.ByName("Kalle Anka & Co"));
+            var articlesView = mainWindow.FindFirstDescendant(cf.ByAutomationId("ArticlesView"));
+            var firstArticle = articlesView.FindFirstDescendant(cf.ByClassName("ListBoxItem"));
+            var resetButton = mainWindow.FindFirstDescendant(cf.ByAutomationId("AbortButton"));
+
+            Assert.AreEqual("0", totalSumBox.Name);
+            Assert.AreEqual(null, articlesView.FindFirstDescendant(cf.ByClassName("ListBoxItem")));
+
+            addProductButton1.Click();
+            Assert.AreEqual("12", totalSumBox.Name);
+
+            addProductButton2.Click();
+            Assert.AreEqual("37", totalSumBox.Name);
+
+            addProductButton3.Click();
+            Assert.AreEqual("82", totalSumBox.Name);
+
+            resetButton.Click();
             Assert.AreEqual("0", totalSumBox.Name);
         }
     }
