@@ -17,6 +17,8 @@ namespace PointOfSale.Model
         { get; set; }
         public int TotalSum
         { get; set; }
+        public double VAT
+        { get; set; }
 
         public Receipt(List<ReceiptArticle> receiptArticleList, string receiptTime, int receiptID, int ReceiptTotalSum)
         {
@@ -24,6 +26,7 @@ namespace PointOfSale.Model
             Time = receiptTime;
             ID = receiptID;
             TotalSum = ReceiptTotalSum;
+            VAT = TotalSum * 0.25;
         }
     }
 }
