@@ -16,18 +16,13 @@ using System.Windows.Shapes;
 namespace PointOfSale.View.UserControls
 {
     /// <summary>
-    /// Interaction logic for HeaderPanel.xaml
+    /// Interaction logic for ReceiptContent.xaml
     /// </summary>
-    public partial class HeaderPanel : UserControl
+    public partial class ReceiptContent : UserControl
     {
-        public HeaderPanel()
+        public ReceiptContent()
         {
             InitializeComponent();
-        }
-
-        private void ViewButton_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

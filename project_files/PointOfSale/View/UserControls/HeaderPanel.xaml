@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:PointOfSale.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+    <StackPanel Orientation="Horizontal" Background="#898989" Margin="0">
+        <Button Name="SaleView" Grid.Column="0" Padding="4" Width="auto" Background="#adadad" BorderThickness="0" Content="Försäljning" Click="ViewButton_Click"/>
+        <Button Name="ReceiptView" Grid.Column="1" Padding="4" Width="auto" BorderThickness="0" Content="Kvitto" Click="ViewButton_Click"/>
+    </StackPanel>
 </UserControl>

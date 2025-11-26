@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using PointOfSale.View.UserControls;
+using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,11 +22,6 @@ namespace PointOfSale
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
     }
 }
