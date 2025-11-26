@@ -5,7 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PointOfSale.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             FontSize="25">
+    
     <Grid Background="#adadad">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="400"/>
@@ -68,9 +70,71 @@
         </ListView>
 
         <Border Grid.Column="1" Margin="30,20" BorderBrush="Black" BorderThickness="2">
-            <Grid Background="White">
-
-            </Grid>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Background="White">
+                <ContentControl>
+                    <ContentControl.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedItem}" Value="{x:Null}">
+                                    <Setter Property="ContentControl.Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                    <StackPanel HorizontalAlignment="Center" Margin="10,30">
+                        <StackPanel>
+                            <TextBlock FontSize="40" FontWeight="DemiBold" TextAlignment="Center">ARTIKLAR:</TextBlock>
+                            <ItemsControl ItemsSource="{Binding SelectedItem.ArticleList}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="3">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Column="0" Grid.Row="0" Name="ArticleName" TextWrapping="Wrap" Text="{Binding Product.Name}"/>
+                                            <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Margin="0 0 5 0">
+                                                <TextBlock Name="ArticleQuantity" Text="{Binding Quantity}"/>
+                                                <TextBlock Text=" x "/>
+                                                <TextBlock Text="{Binding Product.Price}"/>
+                                                <TextBlock Text=" kr"/>
+                                            </StackPanel>
+                                            <Border Grid.Column="1" Grid.Row="0" Margin="10,0,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Name="ArticleSum" DockPanel.Dock="Right" Text="{Binding Sum}"/>
+                                                    <TextBlock DockPanel.Dock="Right" Text=" kr"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <TextBlock FontSize="40" FontWeight="DemiBold" TextAlignment="Center" Margin="0,30,0,0">TOTAL PRIS:</TextBlock>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <TextBlock Text="{Binding SelectedItem.TotalSum}"/>
+                                <TextBlock Text=" kr"/>
+                            </StackPanel>
+                            <TextBlock FontSize="30" FontWeight="DemiBold" TextAlignment="Center">VARAV MOMS:</TextBlock>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <TextBlock Text="25% "/>
+                                <TextBlock Text="AV "/>
+                                <TextBlock Text="{Binding SelectedItem.TotalSum}"/>
+                                <TextBlock Text=" = "/>
+                                <TextBlock Text="{Binding SelectedItem.VAT}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </ContentControl>
+            </ScrollViewer>
         </Border>
     </Grid>
 </UserControl>
