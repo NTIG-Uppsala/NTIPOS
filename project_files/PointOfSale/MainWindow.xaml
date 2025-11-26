@@ -10,7 +10,7 @@
     
     <!-- WINDOW RESOURCES -->
     <Window.Resources>
-        <SolidColorBrush x:Key="RedBrush" Color="#cacaca"/>
+        <SolidColorBrush x:Key="NonSelectedBrush" Color="#cacaca"/>
 
         <SolidColorBrush x:Key="SolidBorderBrush" Color="#888" />
 
@@ -30,7 +30,7 @@
                             <Border 
                                 Name="Border"
                                 Margin="0,0,-4,0" 
-                                Background="{StaticResource RedBrush}"
+                                Background="{StaticResource NonSelectedBrush}"
                                 BorderBrush="{StaticResource  SolidBorderBrush}" 
                                 BorderThickness="1,1,1,1" 
                                 CornerRadius="2,12,0,0" >
