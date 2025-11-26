@@ -1,6 +1,8 @@
 ﻿using PointOfSale.ViewModel;
+using PointOfSale.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,7 +36,8 @@ namespace PointOfSale.View.UserControls
         private void CheckoutButton_Click(object sender, RoutedEventArgs e)
         {
             int TotalSum = ArticlesViewModel.ArticlesVM.TotalSum;
-            ReceiptsViewModel.ReceiptsVM.AddReceipt(TotalSum);
+            ObservableCollection<Article> ArticleCollection = ArticlesViewModel.ArticlesVM.Articles;
+            ReceiptsViewModel.ReceiptsVM.AddReceipt(ArticleCollection, TotalSum);
             ArticlesViewModel.ArticlesVM.ClearBasket();
         }
     }

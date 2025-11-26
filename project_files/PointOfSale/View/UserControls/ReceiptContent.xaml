@@ -12,7 +12,14 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <ListView Grid.Column="0" Margin="20" BorderBrush="black" BorderThickness="2" ItemsSource="{Binding Receipts}">
+        <ListView Name="ReceiptsView" 
+                  Grid.Column="0" 
+                  SelectionMode="Single" 
+                  Margin="20" 
+                  BorderBrush="black" 
+                  BorderThickness="2" 
+                  ItemsSource="{Binding Receipts}"
+                  SelectedItem="{Binding SelectedItem}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -60,7 +67,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-            <Border Grid.Column="1" Margin="30,20" BorderBrush="Black" BorderThickness="2">
+        <Border Grid.Column="1" Margin="30,20" BorderBrush="Black" BorderThickness="2">
             <Grid Background="White">
 
             </Grid>

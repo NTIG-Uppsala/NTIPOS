@@ -67,7 +67,7 @@
                 <TabItem.Header>
                     Försäljning
                 </TabItem.Header>
-                <UserControls:SaleContent />
+                <UserControls:SaleContent/>
             </TabItem>
             <TabItem>
                 <TabItem.Header>
