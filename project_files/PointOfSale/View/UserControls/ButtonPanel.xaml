@@ -15,7 +15,7 @@
             <StackPanel Grid.Row="0" Orientation="Horizontal">
                 <UserControls:GUIButton x:Name="AbortButton" Click="AbortButton_Click" Width="240" Color="Red" Label="Avbryt Köp" />
                 <ContentControl Width="10"></ContentControl>
-                <UserControls:GUIButton x:Name="CheckoutButton" Click="CheckoutButton_Click" Width="240" Color="Green" Label="Köp" />
+                <UserControls:GUIButton x:Name="CheckoutButton" Click="CheckoutButton_Click" Width="240" Color="ForestGreen" Label="Köp" />
             </StackPanel>
         </Grid>
     </ContentControl>
