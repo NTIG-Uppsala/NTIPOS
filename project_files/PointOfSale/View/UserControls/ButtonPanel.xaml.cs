@@ -35,9 +35,12 @@ namespace PointOfSale.View.UserControls
 
         private void CheckoutButton_Click(object sender, RoutedEventArgs e)
         {
-            int TotalSum = ArticlesViewModel.ArticlesVM.TotalSum;
-            ObservableCollection<Article> ArticleCollection = ArticlesViewModel.ArticlesVM.Articles;
-            ReceiptsViewModel.ReceiptsVM.AddReceipt(ArticleCollection, TotalSum);
+            if (ArticlesViewModel.ArticlesVM.Articles.Any())
+            {
+                int TotalSum = ArticlesViewModel.ArticlesVM.TotalSum;
+                ObservableCollection<Article> ArticleCollection = ArticlesViewModel.ArticlesVM.Articles;
+                ReceiptsViewModel.ReceiptsVM.AddReceipt(ArticleCollection, TotalSum);
+            }
             ArticlesViewModel.ArticlesVM.ClearBasket();
         }
     }
