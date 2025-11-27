@@ -52,7 +52,7 @@ namespace PointOfSale.ViewModel
 
             int receiptID = currentID;
 
-            Receipts.Add(new Receipt(articleList, formattedTime, receiptID, totalSumInt));
+            Receipts.Insert(0, new Receipt(articleList, formattedTime, receiptID, totalSumInt));
 
             currentID++;
         }
