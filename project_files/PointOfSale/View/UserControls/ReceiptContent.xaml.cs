@@ -1,4 +1,5 @@
 ﻿using PointOfSale.ViewModel;
+using PointOfSale.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,15 @@ namespace PointOfSale.View.UserControls
         {
             InitializeComponent();
             DataContext = ReceiptsViewModel.ReceiptsVM;
+        }
+
+        private void PrintButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ReceiptsViewModel.ReceiptsVM.SelectedItem != null)
+            {
+                Receipt receipt = ReceiptsViewModel.ReceiptsVM.SelectedItem;
+                ReceiptsViewModel.ReceiptsVM.PrintReceipt(receipt);
+            }
         }
     }
 }
