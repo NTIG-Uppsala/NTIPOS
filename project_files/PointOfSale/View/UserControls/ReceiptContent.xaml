@@ -57,11 +57,11 @@
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock Name="ArticleName" TextWrapping="Wrap" Text="{Binding ID}"/>
-                        <TextBlock Grid.Row="1" Name="ArticleQuantity" Text="{Binding Time}"/>
+                        <TextBlock Name="ReceiptID" TextWrapping="Wrap" Text="{Binding ID}"/>
+                        <TextBlock Grid.Row="1" Name="ReceiptTimestamp" Text="{Binding Time}"/>
                         <Border Grid.Column="1">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Name="ArticleSum" DockPanel.Dock="Right" Text="{Binding TotalSumFormatted}"/>
+                                <TextBlock Name="ReceiptSum" DockPanel.Dock="Right" Text="{Binding TotalSumFormatted}"/>
                                 <TextBlock DockPanel.Dock="Right" Text=" kr"/>
                             </StackPanel>
                         </Border>
