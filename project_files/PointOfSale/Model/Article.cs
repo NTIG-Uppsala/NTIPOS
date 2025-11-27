@@ -1,6 +1,7 @@
 ﻿using PointOfSale.MVVM;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace PointOfSale.Model
 {
     public class Article : ViewModelBase
     {
+        CultureInfo svSE = CultureInfo.CreateSpecificCulture("sv-SE");
         public Product Product
         { get; set; }
 
@@ -23,15 +25,23 @@ namespace PointOfSale.Model
             }
         }
 
-        private int sum;
+        private float sum;
 
-        public int Sum
+        public float Sum
         {
             get { return sum; }
             set
             {
                 sum = value;
                 NotifyPropertyChanged();
+            }
+        }
+
+        public string SumFormatted
+        {
+            get
+            {
+                return Sum.ToString("0.00", svSE);
             }
         }
 

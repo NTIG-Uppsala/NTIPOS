@@ -12,10 +12,10 @@ namespace PointOfSale.Model
         { get; set; }
         public string Category
         { get; set; }
-        public int Price
-        { get; set; }
 
-        public Product(string productName, string categoryName, int priceInt)
+        public float Price { get; set; }
+
+        public Product(string productName, string categoryName, float priceInt)
         {
             Name = productName;
             Category = categoryName;

@@ -37,7 +37,7 @@ namespace PointOfSale.ViewModel
             Receipts = new ObservableCollection<Receipt> { };
         }
 
-        public void AddReceipt(ObservableCollection<Article> articleCollection, int totalSumInt)
+        public void AddReceipt(ObservableCollection<Article> articleCollection, float totalSumInt)
         {
             DateTime currentTime = DateTime.Now;
             string formattedTime = currentTime.ToString("yyyy-MM-dd HH:mm:ss");

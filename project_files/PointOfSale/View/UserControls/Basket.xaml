@@ -55,12 +55,12 @@
                                 <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 0 5 0">
                                     <TextBlock Name="ArticleQuantity" Text="{Binding Quantity}"/>
                                     <TextBlock Text=" x "/>
-                                    <TextBlock Text="{Binding Product.Price}"/>
+                                    <TextBlock Text="{Binding Product.PriceFormatted}"/>
                                     <TextBlock Text=" kr"/>
                                 </StackPanel>
                                 <Border Grid.Column="1">
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Name="ArticleSum" DockPanel.Dock="Right" Text="{Binding Sum}"/>
+                                        <TextBlock Name="ArticleSum" DockPanel.Dock="Right" Text="{Binding SumFormatted}"/>
                                         <TextBlock DockPanel.Dock="Right" Text=" kr"/>
                                     </StackPanel>
                                 </Border>
@@ -81,7 +81,7 @@
 
                     <TextBlock Grid.Column="0" Margin="5,0,0,0">Summa:</TextBlock>
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
-                        <TextBlock Name="TotalSum" Text="{Binding TotalSum}"/>
+                        <TextBlock Name="TotalSum" Text="{Binding TotalSumFormatted}"/>
                         <TextBlock Text=" kr" Margin="0,0,5,0"/>
                     </StackPanel>
                 </Grid>

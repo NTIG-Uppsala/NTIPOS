@@ -60,7 +60,7 @@
                         <TextBlock Grid.Row="1" Name="ArticleQuantity" Text="{Binding Time}"/>
                         <Border Grid.Column="1">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Name="ArticleSum" DockPanel.Dock="Right" Text="{Binding TotalSum}"/>
+                                <TextBlock Name="ArticleSum" DockPanel.Dock="Right" Text="{Binding TotalSumFormatted}"/>
                                 <TextBlock DockPanel.Dock="Right" Text=" kr"/>
                             </StackPanel>
                         </Border>
@@ -105,12 +105,12 @@
                                             <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Margin="0 0 5 0">
                                                 <TextBlock Name="ArticleQuantity" Text="{Binding Quantity}"/>
                                                 <TextBlock Text=" x "/>
-                                                <TextBlock Text="{Binding Product.Price}"/>
+                                                <TextBlock Text="{Binding Product.PriceFormatted}"/>
                                                 <TextBlock Text=" kr"/>
                                             </StackPanel>
                                             <Border Grid.Column="1" Grid.Row="0" Margin="10,0,0,0">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Name="ArticleSum" DockPanel.Dock="Right" Text="{Binding Sum}"/>
+                                                    <TextBlock Name="ArticleSum" DockPanel.Dock="Right" Text="{Binding SumFormatted}"/>
                                                     <TextBlock DockPanel.Dock="Right" Text=" kr"/>
                                                 </StackPanel>
                                             </Border>
@@ -120,16 +120,16 @@
                             </ItemsControl>
                             <TextBlock FontSize="40" FontWeight="DemiBold" TextAlignment="Center" Margin="0,30,0,0">TOTAL PRIS:</TextBlock>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <TextBlock Text="{Binding SelectedItem.TotalSum}"/>
+                                <TextBlock Text="{Binding SelectedItem.TotalSumFormatted}"/>
                                 <TextBlock Text=" kr"/>
                             </StackPanel>
                             <TextBlock FontSize="30" FontWeight="DemiBold" TextAlignment="Center">VARAV MOMS:</TextBlock>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <TextBlock Text="25% "/>
                                 <TextBlock Text="AV "/>
-                                <TextBlock Text="{Binding SelectedItem.TotalSum}"/>
+                                <TextBlock Text="{Binding SelectedItem.TotalSumFormatted}"/>
                                 <TextBlock Text=" = "/>
-                                <TextBlock Text="{Binding SelectedItem.VAT}"/>
+                                <TextBlock Text="{Binding SelectedItem.VATFormatted}"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>

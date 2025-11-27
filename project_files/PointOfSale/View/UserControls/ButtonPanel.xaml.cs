@@ -37,7 +37,7 @@ namespace PointOfSale.View.UserControls
         {
             if (ArticlesViewModel.ArticlesVM.Articles.Any())
             {
-                int TotalSum = ArticlesViewModel.ArticlesVM.TotalSum;
+                float TotalSum = ArticlesViewModel.ArticlesVM.TotalSum;
                 ObservableCollection<Article> ArticleCollection = ArticlesViewModel.ArticlesVM.Articles;
                 ReceiptsViewModel.ReceiptsVM.AddReceipt(ArticleCollection, TotalSum);
             }
