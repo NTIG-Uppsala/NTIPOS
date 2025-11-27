@@ -35,7 +35,7 @@ namespace Tests
             var totalSumBox = mainWindow.FindFirstDescendant(cf.ByAutomationId("TotalSum"));
             var articlesView = mainWindow.FindFirstDescendant(cf.ByAutomationId("ArticlesView"));
 
-            Assert.AreEqual("0", totalSumBox.Name);
+            Assert.AreEqual("0,00", totalSumBox.Name);
             Assert.AreEqual(null, articlesView.FindFirstDescendant(cf.ByClassName("ListBoxItem")));
         }
 
@@ -48,12 +48,12 @@ namespace Tests
             var firstArticle = articlesView.FindFirstDescendant(cf.ByClassName("ListBoxItem"));
 
 
-            Assert.AreEqual("0", totalSumBox.Name);
+            Assert.AreEqual("0,00", totalSumBox.Name);
             Assert.AreEqual(null, articlesView.FindFirstDescendant(cf.ByClassName("ListBoxItem")));
 
             addProductButton.Click();
 
-            Assert.AreEqual("12", totalSumBox.Name);
+            Assert.AreEqual("12,00", totalSumBox.Name);
         }
 
         [TestMethod]
@@ -64,7 +64,7 @@ namespace Tests
             var articlesView = mainWindow.FindFirstDescendant(cf.ByAutomationId("ArticlesView"));
             var firstArticle = articlesView.FindFirstDescendant(cf.ByClassName("ListBoxItem"));
 
-            Assert.AreEqual("0", totalSumBox.Name);
+            Assert.AreEqual("0,00", totalSumBox.Name);
             Assert.AreEqual(null, articlesView.FindFirstDescendant(cf.ByClassName("ListBoxItem")));
 
             for (int i = 0; i < 10; i++)
@@ -72,7 +72,7 @@ namespace Tests
                 addProductButton.Click();
             }
 
-            Assert.AreEqual("120", totalSumBox.Name);
+            Assert.AreEqual("120,00", totalSumBox.Name);
         }
 
         [TestMethod]
@@ -84,7 +84,7 @@ namespace Tests
             var firstArticle = articlesView.FindFirstDescendant(cf.ByClassName("ListBoxItem"));
             var resetButton = mainWindow.FindFirstDescendant(cf.ByAutomationId("AbortButton"));
 
-            Assert.AreEqual("0", totalSumBox.Name);
+            Assert.AreEqual("0,00", totalSumBox.Name);
             Assert.AreEqual(null, articlesView.FindFirstDescendant(cf.ByClassName("ListBoxItem")));
 
             for (int i = 0; i < 10; i++)
@@ -92,11 +92,11 @@ namespace Tests
                 addProductButton.Click();
             }
 
-            Assert.AreEqual("120", totalSumBox.Name);
+            Assert.AreEqual("120,00", totalSumBox.Name);
 
             resetButton.Click();
             
-            Assert.AreEqual("0", totalSumBox.Name);
+            Assert.AreEqual("0,00", totalSumBox.Name);
         }
 
         [TestMethod]
@@ -110,20 +110,20 @@ namespace Tests
             var firstArticle = articlesView.FindFirstDescendant(cf.ByClassName("ListBoxItem"));
             var resetButton = mainWindow.FindFirstDescendant(cf.ByAutomationId("AbortButton"));
 
-            Assert.AreEqual("0", totalSumBox.Name);
+            Assert.AreEqual("0,00", totalSumBox.Name);
             Assert.AreEqual(null, articlesView.FindFirstDescendant(cf.ByClassName("ListBoxItem")));
 
             addProductButton1.Click();
-            Assert.AreEqual("12", totalSumBox.Name);
+            Assert.AreEqual("12,00", totalSumBox.Name);
 
             addProductButton2.Click();
-            Assert.AreEqual("37", totalSumBox.Name);
+            Assert.AreEqual("37,00", totalSumBox.Name);
 
             addProductButton3.Click();
-            Assert.AreEqual("82", totalSumBox.Name);
+            Assert.AreEqual("82,00", totalSumBox.Name);
 
             resetButton.Click();
-            Assert.AreEqual("0", totalSumBox.Name);
+            Assert.AreEqual("0,00", totalSumBox.Name);
         }
     }
 }
