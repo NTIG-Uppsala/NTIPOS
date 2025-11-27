@@ -16,7 +16,7 @@
 
             <!-- ACTUAL BASKET -->
             <Grid>
-                <ListView Name="ArticlesView"  SelectionMode="Single" ItemsSource="{Binding Articles}">
+                <ListView Name="ArticlesView"  SelectionMode="Single" ItemsSource="{Binding Articles}" SelectedItem="{Binding SelectedItem}">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

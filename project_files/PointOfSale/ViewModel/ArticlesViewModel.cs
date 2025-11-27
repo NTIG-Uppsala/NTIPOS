@@ -20,6 +20,17 @@ namespace PointOfSale.ViewModel
         public static ArticlesViewModel ArticlesVM { get { return articlesVm; } }
         public ObservableCollection<Article> Articles { get; set; }
 
+        private Article selectedItem;
+        public Article SelectedItem
+        {
+            get { return selectedItem; }
+            set
+            {
+                selectedItem = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         private float totalSum = 0;
 
         public float TotalSum
@@ -63,6 +74,7 @@ namespace PointOfSale.ViewModel
                 Articles.Remove(relevantArticle);
                 Articles.Add(relevantArticle);
             }
+            SelectedItem = relevantArticle;
             UpdateTotalSum();
         }
 
