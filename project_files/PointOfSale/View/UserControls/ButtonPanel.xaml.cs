@@ -40,6 +40,7 @@ namespace PointOfSale.View.UserControls
                 float TotalSum = ArticlesViewModel.ArticlesVM.TotalSum;
                 ObservableCollection<Article> ArticleCollection = ArticlesViewModel.ArticlesVM.Articles;
                 ReceiptsViewModel.ReceiptsVM.AddReceipt(ArticleCollection, TotalSum);
+                ReceiptsViewModel.ReceiptsVM.PrintReceipt(ReceiptsViewModel.ReceiptsVM.Receipts[0]);
             }
             ArticlesViewModel.ArticlesVM.ClearBasket();
         }
