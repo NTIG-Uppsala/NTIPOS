@@ -11,6 +11,8 @@ namespace PointOfSale.ViewModel
 {
     public class ProductsViewModel
     {
+        private static ProductsViewModel productsVm = new ProductsViewModel();
+        public static ProductsViewModel ProductsVM { get { return productsVm; } }
         public ObservableCollection<Product> Products { get; set; }
 
         public ProductsViewModel()
