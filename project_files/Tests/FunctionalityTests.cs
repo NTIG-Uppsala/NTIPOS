@@ -5,6 +5,7 @@ using FlaUI.Core;
 using System.Drawing.Text;
 using System.ComponentModel;
 using System.DirectoryServices.ActiveDirectory;
+using System.Data.SQLite;
 
 namespace Tests
 {
@@ -14,20 +15,23 @@ namespace Tests
         private String applicationPath = Path.GetFullPath(@"..\..\..\..\PointOfSale\bin\Debug\net9.0-windows\PointOfSale.exe");
         private Application application;
         private Window mainWindow;
-        private ConditionFactory cf;
+        private ConditionFactory cf = new ConditionFactory(new UIA3PropertyLibrary());
 
         [TestInitialize]
         public void Setup()
         {
+            TestSetupAndCleanup.InitializeTestDatabase();
+
             application = Application.Launch(applicationPath);
             mainWindow = application.GetMainWindow(new UIA3Automation());
-            cf = new ConditionFactory(new UIA3PropertyLibrary());
         }
 
         [TestCleanup]
         public void Cleanup()
         {
             application.Close();
+            TestSetupAndCleanup.RemoveTestDatabase();
+            TestSetupAndCleanup.RemoveTestReceiptDirectory();
         }
         [TestMethod]
         public void TestInitialState()

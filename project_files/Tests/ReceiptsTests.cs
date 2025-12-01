@@ -19,6 +19,8 @@ namespace Tests
         [TestInitialize]
         public void Setup()
         {
+            TestSetupAndCleanup.InitializeTestDatabase();
+
             // Start Application
             application = Application.Launch(applicationPath);
             mainWindow = application.GetMainWindow(new UIA3Automation());
@@ -30,16 +32,8 @@ namespace Tests
             // Close Application
             application.Close();
 
-            // Remove test receipts directory
-            try
-            {
-                if (Directory.Exists(@".\receipts"))
-                    Directory.Delete(@".\receipts", true);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception occured " + e.Message);
-            }
+            TestSetupAndCleanup.RemoveTestReceiptDirectory();
+            TestSetupAndCleanup.RemoveTestDatabase();
         }
 
         [TestMethod]
