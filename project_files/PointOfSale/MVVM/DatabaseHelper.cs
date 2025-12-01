@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SQLite;
+using PointOfSale.Model;
+using PointOfSale.ViewModel;
 
 namespace PointOfSale.MVVM
 {
@@ -93,6 +96,57 @@ namespace PointOfSale.MVVM
                     }
                     tx.Commit();
                 }
+            }
+        }
+
+        public static string ReadData(string query)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (var cmd = new SQLiteCommand(query, connection))
+                {
+                    object result = cmd.ExecuteScalar();
+                    return result == null ? "" : result.ToString();
+                }
+            }
+        }
+
+        public static void RemoveStock(ObservableCollection<Article> articles)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                foreach (var article in articles)
+                {
+                    string query = $"UPDATE products SET stock = stock - '{article.Quantity}' WHERE name = '{article.Product.Name}'";
+                    using (var cmd = new SQLiteCommand(query, connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+        }
+
+        public static bool CheckStock(Product product)
+        {
+            int increaseAmount = 1;
+            int stockData = Convert.ToInt32(ReadData($"SELECT stock FROM products WHERE name = '{product.Name}'"));
+            Article article = ArticlesViewModel.ArticlesVM.Articles.SingleOrDefault(article => article.Product.Name == product.Name);
+
+            if (article != null) 
+            {
+                increaseAmount += article.Quantity;
+            }
+
+            if (stockData - increaseAmount >= 0) 
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

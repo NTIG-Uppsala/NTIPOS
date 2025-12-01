@@ -1,5 +1,6 @@
 ﻿using PointOfSale.ViewModel;
 using PointOfSale.Model;
+using PointOfSale.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -33,7 +34,16 @@ namespace PointOfSale.View.UserControls
 
         private void ProductButton_Click(object sender, RoutedEventArgs e)
         {
-            ArticlesViewModel.ArticlesVM.AddProduct((sender as FrameworkElement).DataContext as Product);
+            Product product = (sender as FrameworkElement).DataContext as Product;
+            bool sufficientStock = DatabaseHelper.CheckStock(product);
+            if (sufficientStock)
+            {
+                ArticlesViewModel.ArticlesVM.AddProduct((sender as FrameworkElement).DataContext as Product);
+            }
+            else
+            {
+                MessageBox.Show($"Det finns inte tillräckligt av {product.Name} i lager", "", MessageBoxButton.OK, MessageBoxImage.Stop);
+            }
         }
     }
 }

@@ -47,8 +47,7 @@ namespace PointOfSale.ViewModel
                                     reader.GetInt32(reader.GetOrdinal("Id")),
                                     reader.GetString(reader.GetOrdinal("Name")),
                                     reader.GetString(reader.GetOrdinal("Category")),
-                                    reader.GetFloat(reader.GetOrdinal("Price")),
-                                    reader.GetInt32(reader.GetOrdinal("Stock"))
+                                    reader.GetFloat(reader.GetOrdinal("Price"))
                                     ));
                     }
                 }

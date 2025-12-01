@@ -27,17 +27,13 @@ namespace PointOfSale.Model
                 return Price.ToString("0.00", svSE);
             }
         }
-        
-        public int Stock
-        { get; set; }
 
-        public Product(int id, string productName, string categoryName, float price, int stock)
+        public Product(int id, string productName, string categoryName, float price)
         {
             Id = id;
             Name = productName;
             Category = categoryName;
             Price = price;
-            Stock = stock;
         }
     }
 }
