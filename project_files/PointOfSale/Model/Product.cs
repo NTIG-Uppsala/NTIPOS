@@ -10,8 +10,12 @@ namespace PointOfSale.Model
     public class Product
     {
         CultureInfo svSE = CultureInfo.CreateSpecificCulture("sv-SE");
+        public int Id
+        { get; set; }
+
         public string Name
         { get; set; }
+
         public string Category
         { get; set; }
 
@@ -23,12 +27,17 @@ namespace PointOfSale.Model
                 return Price.ToString("0.00", svSE);
             }
         }
+        
+        public int Stock
+        { get; set; }
 
-        public Product(string productName, string categoryName, float priceInt)
+        public Product(int id, string productName, string categoryName, float price, int stock)
         {
+            Id = id;
             Name = productName;
             Category = categoryName;
-            Price = priceInt;
+            Price = price;
+            Stock = stock;
         }
     }
 }

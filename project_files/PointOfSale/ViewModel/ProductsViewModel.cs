@@ -1,7 +1,10 @@
 ﻿using PointOfSale.Model;
+using PointOfSale.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,31 +20,39 @@ namespace PointOfSale.ViewModel
 
         public ProductsViewModel()
         {
-            Products = new ObservableCollection<Product>
+            Products = new ObservableCollection<Product>();
+            if (!File.Exists(@".\databases\POSDB.db"))
             {
-                new ("Marlboro Red (20-pack)", "Tobak", 89),
-                new ("Camel Blue (20-pack)", "Tobak", 85),
-                new ("L&M Filter (20-pack)", "Tobak", 79),
-                new ("Skruf Original Portion", "Tobak", 62),
-                new ("Göteborgs Rapé White Portion", "Tobak", 67),
+                DatabaseHelper.InitializeDatabase();
+                DatabaseHelper.AddProducts();
+            }
+            getAllProducts(@"Data Source=.\databases\POSDB.db;Version=3;");
+        }
 
-                new ("Marabou Mjölkchoklad 100 g", "Godis", 25),
-                new ("Daim dubbel", "Godis", 15),
-                new ("Kexchoklad", "Godis", 12),
-                new ("Malaco Gott & Blandat 160 g", "Godis", 28),
+        public void getAllProducts(string connectionString)
+        {
+            Products.Clear();
 
-                new ("Korv med bröd", "Enkel mat", 25),
-                new ("Varm toast (ost & skinka)", "Enkel mat", 30),
-                new ("Pirog (köttfärs)", "Enkel mat", 22),
-                new ("Färdig sallad (kyckling)", "Enkel mat", 49),
-                new ("Panini (mozzarella & pesto)", "Enkel mat", 45),
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string query = "SELECT * FROM products";
 
-                new ("Aftonbladet (dagens)", "Tidningar", 28),
-                new ("Expressen (dagens)", "Tidningar", 28),
-                new ("Illustrerad Vetenskap", "Tidningar", 79),
-                new ("Kalle Anka & Co", "Tidningar", 45),
-                new ("Allt om Mat", "Tidningar", 69),
-            };
+                using (SQLiteCommand command = new SQLiteCommand(query, connection))
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Products.Add(new Product(
+                                    reader.GetInt32(reader.GetOrdinal("Id")),
+                                    reader.GetString(reader.GetOrdinal("Name")),
+                                    reader.GetString(reader.GetOrdinal("Category")),
+                                    reader.GetFloat(reader.GetOrdinal("Price")),
+                                    reader.GetInt32(reader.GetOrdinal("Stock"))
+                                    ));
+                    }
+                }
+            }
         }
     }
 }
