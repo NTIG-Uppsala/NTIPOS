@@ -44,6 +44,10 @@ namespace PointOfSale.View.UserControls
                     ArticlesViewModel.ArticlesVM.AddProduct(product);
                 }
             }
+            else
+            {
+                ArticlesViewModel.ArticlesVM.AddProduct(product);
+            }
         }
     }
 }
