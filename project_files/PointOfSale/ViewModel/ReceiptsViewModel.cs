@@ -46,7 +46,7 @@ namespace PointOfSale.ViewModel
         public void AddReceipt(ObservableCollection<Article> articleCollection, float totalSumInt)
         {
             DateTime currentTime = DateTime.Now;
-            string formattedTime = currentTime.ToString("yyyy-MM-dd HH:mm:ss");
+            string formattedTime = currentTime.ToString("yyyy-MM-dd HH.mm.ss");
 
             List<ReceiptArticle> articleList = new List<ReceiptArticle>();
 
@@ -67,7 +67,7 @@ namespace PointOfSale.ViewModel
         {
             CultureInfo.CurrentCulture = new CultureInfo("sv-SE");
 
-            string destination = "receipts/" + receipt.ID + " printed " + DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss") + ".pdf";
+            string destination = "receipts/" + receipt.ID + " printed at " + DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss") + " issued at " + receipt.Time + ".pdf";
             FileInfo file = new FileInfo(destination);
             file.Directory.Create();
 
