@@ -54,7 +54,7 @@ namespace Tests
         }
 
         [TestMethod]
-        public void TestRemoveOneStock()
+        public void TestAddOneProductSold()
         {
             var addProductButton = mainWindow.FindFirstDescendant(cf.ByName("Kexchoklad"));
             var checkoutButton = mainWindow.FindFirstDescendant(cf.ByAutomationId("CheckoutButton"));
@@ -68,7 +68,7 @@ namespace Tests
         }
 
         [TestMethod]
-        public void TestRemoveMultipleStock()
+        public void TestAddMultipleProductSold()
         {
             var addProductButton = mainWindow.FindFirstDescendant(cf.ByName("Kexchoklad"));
             var checkoutButton = mainWindow.FindFirstDescendant(cf.ByAutomationId("CheckoutButton"));
