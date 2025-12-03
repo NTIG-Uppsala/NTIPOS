@@ -16,10 +16,13 @@ namespace Tests
         private Window mainWindow;
         private ConditionFactory cf = new ConditionFactory(new UIA3PropertyLibrary());
 
+        private string receiptsDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/POS/receipts";
+
         [TestInitialize]
         public void Setup()
         {
             TestSetupAndCleanup.InitializeTestDatabase();
+            TestSetupAndCleanup.ProtectUserReceipts();
 
             // Start Application
             application = Application.Launch(applicationPath);
@@ -32,7 +35,7 @@ namespace Tests
             // Close Application
             application.Close();
 
-            TestSetupAndCleanup.RemoveTestReceiptDirectory();
+            TestSetupAndCleanup.RestoreReceiptDirectory();
             TestSetupAndCleanup.RemoveTestDatabase();
         }
 
@@ -65,9 +68,9 @@ namespace Tests
             Assert.AreEqual("0", receipt.FindFirstDescendant(cf.ByAutomationId("ReceiptID")).Name);
             Assert.AreEqual("12,00", receipt.FindFirstDescendant(cf.ByAutomationId("ReceiptSum")).Name);
 
-            Assert.IsTrue(Directory.Exists(@".\receipts"));
+            Assert.IsTrue(Directory.Exists(receiptsDirectory));
 
-            Assert.AreEqual(1, Directory.GetFiles(@".\receipts").Length);
+            Assert.AreEqual(1, Directory.GetFiles(receiptsDirectory).Length);
         }
 
         [TestMethod]
@@ -90,9 +93,9 @@ namespace Tests
             var printButton = mainWindow.FindFirstDescendant(cf.ByName("Skriv ut"));
             printButton.Click();
 
-            Assert.IsTrue(Directory.Exists(@".\receipts"));
+            Assert.IsTrue(Directory.Exists(receiptsDirectory));
 
-            Assert.AreEqual(2, Directory.GetFiles(@".\receipts").Length);
+            Assert.AreEqual(2, Directory.GetFiles(receiptsDirectory).Length);
         }
     }
 }

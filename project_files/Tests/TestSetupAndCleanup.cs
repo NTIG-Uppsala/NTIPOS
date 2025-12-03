@@ -10,14 +10,25 @@ namespace Tests
     internal static class TestSetupAndCleanup
     {
 
-        private static readonly string fileLocation = @".\databases\POSDB.db";
-        public static readonly string connectionString = @"Data Source=.\databases\POSDB.db;Version=3;";
+        private static readonly string databaseLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/POS/databases/POSDB.db";
+        private static readonly string tempDatabaseLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/POS/databases/tempPOSDB.db";
+        public static readonly string connectionString = "Data Source=" + databaseLocation + ";Version=3;";
 
         public static void InitializeTestDatabase()
         {
-            FileInfo file = new FileInfo(fileLocation);
+            try
+            {
+                if (File.Exists(databaseLocation))
+                    File.Move(databaseLocation, tempDatabaseLocation);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception occured " + e.Message);
+            }
+
+            FileInfo file = new FileInfo(databaseLocation);
             file.Directory.Create();
-            SQLiteConnection.CreateFile(fileLocation);
+            SQLiteConnection.CreateFile(databaseLocation);
 
             using (var connection = new SQLiteConnection(connectionString))
             {
@@ -88,7 +99,11 @@ namespace Tests
         {
             try
             {
-                Directory.Delete(@".\databases", true);
+                if (File.Exists(databaseLocation))
+                    File.Delete(databaseLocation);
+
+                if (File.Exists(tempDatabaseLocation))
+                    File.Move(tempDatabaseLocation, databaseLocation);
             }
             catch (Exception e)
             {
@@ -96,12 +111,30 @@ namespace Tests
             }
         }
         
-        public static void RemoveTestReceiptDirectory()
+        private static readonly string receiptsDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/POS/receipts";
+        private static readonly string tempReceiptsDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/POS/treceipts";
+
+        public static void ProtectUserReceipts()
         {
             try
             {
-                if (Directory.Exists(@".\receipts"))
-                    Directory.Delete(@".\receipts", true);
+                if (Directory.Exists(receiptsDirectory))
+                    Directory.Move(receiptsDirectory, tempReceiptsDirectory);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception occured " + e.Message);
+            }
+        }
+        public static void RestoreReceiptDirectory()
+        {
+            try
+            {
+                if (Directory.Exists(receiptsDirectory))
+                    Directory.Delete(receiptsDirectory, true);
+
+                if (Directory.Exists(tempReceiptsDirectory))
+                    Directory.Move(tempReceiptsDirectory, receiptsDirectory);
             }
             catch (Exception e)
             {

@@ -67,7 +67,7 @@ namespace PointOfSale.ViewModel
         {
             CultureInfo.CurrentCulture = new CultureInfo("sv-SE");
 
-            string destination = "receipts/" + receipt.ID + " printed at " + DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss") + " issued at " + receipt.Time + ".pdf";
+            string destination = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Documents/POS/receipts/" + receipt.ID + " printed at " + DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss") + " issued at " + receipt.Time + ".pdf";
             FileInfo file = new FileInfo(destination);
             file.Directory.Create();
 

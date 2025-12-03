@@ -13,8 +13,8 @@ namespace PointOfSale.MVVM
 {
     class DatabaseHelper
     {
-        private static readonly string fileLocation = @".\databases\POSDB.db";
-        private static readonly string connectionString = @"Data Source=.\databases\POSDB.db;Version=3;";
+        public static readonly string fileLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/POS/databases/POSDB.db";
+        public static readonly string connectionString = "Data Source=" + fileLocation + ";Version=3;";
 
         public static void InitializeDatabase()
         {

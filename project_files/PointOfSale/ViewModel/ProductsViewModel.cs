@@ -21,12 +21,12 @@ namespace PointOfSale.ViewModel
         public ProductsViewModel()
         {
             Products = new ObservableCollection<Product>();
-            if (!File.Exists(@".\databases\POSDB.db"))
+            if (!File.Exists(DatabaseHelper.fileLocation))
             {
                 DatabaseHelper.InitializeDatabase();
                 DatabaseHelper.AddProducts();
             }
-            getAllProducts(@"Data Source=.\databases\POSDB.db;Version=3;");
+            getAllProducts(DatabaseHelper.connectionString);
         }
 
         public void getAllProducts(string connectionString)
