@@ -35,19 +35,7 @@ namespace PointOfSale.View.UserControls
         private void ProductButton_Click(object sender, RoutedEventArgs e)
         {
             Product product = (sender as FrameworkElement).DataContext as Product;
-            bool sufficientStock = DatabaseHelper.CheckStock(product);
-            if (!sufficientStock)
-            {
-                MessageBoxResult result = MessageBox.Show($"Det finns inte tillräckligt av {product.Name} i lager, lägg till i varukorgen ändå?", "", MessageBoxButton.YesNo, MessageBoxImage.Stop);
-                if (result == MessageBoxResult.Yes)
-                {
-                    ArticlesViewModel.ArticlesVM.AddProduct(product);
-                }
-            }
-            else
-            {
-                ArticlesViewModel.ArticlesVM.AddProduct(product);
-            }
+            ArticlesViewModel.ArticlesVM.AddProduct(product);
         }
     }
 }

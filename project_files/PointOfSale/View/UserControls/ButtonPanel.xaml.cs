@@ -42,7 +42,7 @@ namespace PointOfSale.View.UserControls
                 ObservableCollection<Article> ArticleCollection = ArticlesViewModel.ArticlesVM.Articles;
                 ReceiptsViewModel.ReceiptsVM.AddReceipt(ArticleCollection, TotalSum);
                 ReceiptsViewModel.ReceiptsVM.PrintReceipt(ReceiptsViewModel.ReceiptsVM.Receipts[0]);
-                DatabaseHelper.RemoveStock(ArticleCollection);
+                DatabaseHelper.AddAmountSold(ArticleCollection);
             }
             ArticlesViewModel.ArticlesVM.ClearBasket();
         }

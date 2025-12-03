@@ -1,10 +1,7 @@
-﻿using FlaUI.UIA3;
+﻿using FlaUI.Core;
 using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Conditions;
-using FlaUI.Core;
-using System.Drawing.Text;
-using System.ComponentModel;
-using System.DirectoryServices.ActiveDirectory;
+using FlaUI.UIA3;
 using System.Data.SQLite;
 
 namespace Tests
@@ -51,8 +48,8 @@ namespace Tests
         [TestMethod]
         public void TestInitialState()
         {
-            int productStock = Convert.ToInt32(ReadData("SELECT stock FROM products WHERE name = 'Kexchoklad'"));
-            Assert.AreEqual(100, productStock);
+            int productAmountSold = Convert.ToInt32(ReadData("SELECT amountSold FROM products WHERE name = 'Kexchoklad'"));
+            Assert.AreEqual(0, productAmountSold);
         }
 
         [TestMethod]
@@ -65,8 +62,8 @@ namespace Tests
             checkoutButton.Click();
             Thread.Sleep(1000);
 
-            int productStock = Convert.ToInt32(ReadData("SELECT stock FROM products WHERE name = 'Kexchoklad'"));
-            Assert.AreEqual(99, productStock);
+            int productAmountSold = Convert.ToInt32(ReadData("SELECT amountSold FROM products WHERE name = 'Kexchoklad'"));
+            Assert.AreEqual(1, productAmountSold);
         }
 
         [TestMethod]
@@ -83,54 +80,8 @@ namespace Tests
             checkoutButton.Click();
             Thread.Sleep(1000);
 
-            int productStock = Convert.ToInt32(ReadData("SELECT stock FROM products WHERE name = 'Kexchoklad'"));
-            Assert.AreEqual(88, productStock);
-        }
-
-        [TestMethod]
-        public void TestOutOfStock()
-        {
-            using (SQLiteConnection connection = new SQLiteConnection(TestSetupAndCleanup.connectionString))
-            {
-                connection.Open();
-                string query = $"UPDATE products SET stock = '10' WHERE name = 'Kexchoklad'";
-                using (var cmd = new SQLiteCommand(query, connection))
-                {
-                    cmd.ExecuteNonQuery();
-                }
-            }
-
-            var addProductButton = mainWindow.FindFirstDescendant(cf.ByName("Kexchoklad"));
-            var checkoutButton = mainWindow.FindFirstDescendant(cf.ByAutomationId("CheckoutButton"));
-
-            for (int i = 0; i < 11; i++)
-            {
-                addProductButton.Click();
-            }
-
-            var popUpWindow = mainWindow.FindFirstDescendant(cf.ByControlType(FlaUI.Core.Definitions.ControlType.Window));
-            var yesButton = popUpWindow.FindFirstDescendant(cf.ByName("Ja"));
-
-            yesButton.Click();
-
-            checkoutButton.Click();
-            Thread.Sleep(1000);
-
-            int productStock = Convert.ToInt32(ReadData("SELECT stock FROM products WHERE name = 'Kexchoklad'"));
-            Assert.AreEqual(-1, productStock);
-
-            addProductButton.Click();
-
-            popUpWindow = mainWindow.FindFirstDescendant(cf.ByControlType(FlaUI.Core.Definitions.ControlType.Window));
-            var noButton = popUpWindow.FindFirstDescendant(cf.ByName("Nej"));
-            
-            noButton.Click();
-
-            checkoutButton.Click();
-            Thread.Sleep(1000);
-
-            productStock = Convert.ToInt32(ReadData("SELECT stock FROM products WHERE name = 'Kexchoklad'"));
-            Assert.AreEqual(-1, productStock);
+            int productAmountSold = Convert.ToInt32(ReadData("SELECT amountSold FROM products WHERE name = 'Kexchoklad'"));
+            Assert.AreEqual(12, productAmountSold);
         }
     }
 }

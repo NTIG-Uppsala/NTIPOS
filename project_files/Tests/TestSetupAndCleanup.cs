@@ -28,7 +28,7 @@ namespace Tests
                             name TEXT NOT NULL,
                             category TEXT NOT NULL,
                             price FLOAT NOT NULL,
-                            stock INTEGER NOT NULL);";
+                            amountSold INTEGER NOT NULL);";
 
                 using (var command = new SQLiteCommand(connection))
                 {
@@ -39,22 +39,22 @@ namespace Tests
 
             var products = new[]
             {
-                new { Name = "Marabou Mjölkchoklad 100 g", Category = "Godis", Price = 25.00, Stock = 100 },
-                new { Name = "Daim dubbel", Category = "Godis", Price = 15.00, Stock = 100 },
-                new { Name = "Kexchoklad", Category = "Godis", Price = 12.00, Stock = 100 },
-                new { Name = "Malaco Gott & Blandat 160 g", Category = "Godis", Price = 28.00, Stock = 100 },
+                new { Name = "Marabou Mjölkchoklad 100 g", Category = "Godis", Price = 25.00, AmountSold = 0 },
+                new { Name = "Daim dubbel", Category = "Godis", Price = 15.00, AmountSold = 0 },
+                new { Name = "Kexchoklad", Category = "Godis", Price = 12.00, AmountSold = 0 },
+                new { Name = "Malaco Gott & Blandat 160 g", Category = "Godis", Price = 28.00, AmountSold = 0 },
 
-                new { Name = "Korv med bröd", Category = "Enkel mat", Price = 25.00, Stock = 100 },
-                new { Name = "Varm toast (ost & skinka)", Category = "Enkel mat", Price = 30.00, Stock = 100 },
-                new { Name = "Pirog (köttfärs)", Category = "Enkel mat", Price = 22.00, Stock = 100 },
-                new { Name = "Färdig sallad (kyckling)", Category = "Enkel mat", Price = 49.00, Stock = 100 },
-                new { Name = "Panini (mozzarella & pesto)", Category = "Enkel mat", Price = 45.00, Stock = 100 },
+                new { Name = "Korv med bröd", Category = "Enkel mat", Price = 25.00, AmountSold = 0 },
+                new { Name = "Varm toast (ost & skinka)", Category = "Enkel mat", Price = 30.00, AmountSold = 0 },
+                new { Name = "Pirog (köttfärs)", Category = "Enkel mat", Price = 22.00, AmountSold = 0 },
+                new { Name = "Färdig sallad (kyckling)", Category = "Enkel mat", Price = 49.00, AmountSold = 0 },
+                new { Name = "Panini (mozzarella & pesto)", Category = "Enkel mat", Price = 45.00, AmountSold = 0 },
 
-                new { Name = "Aftonbladet (dagens)", Category = "Tidningar", Price = 28.00, Stock = 100 },
-                new { Name = "Expressen (dagens)", Category = "Tidningar", Price = 28.00, Stock = 100 },
-                new { Name = "Illustrerad Vetenskap", Category = "Tidningar", Price = 79.00, Stock = 100 },
-                new { Name = "Kalle Anka & Co", Category = "Tidningar", Price = 45.00, Stock = 100 },
-                new { Name = "Allt om Mat", Category = "Tidningar", Price = 69.00, Stock = 100 },
+                new { Name = "Aftonbladet (dagens)", Category = "Tidningar", Price = 28.00, AmountSold = 0 },
+                new { Name = "Expressen (dagens)", Category = "Tidningar", Price = 28.00, AmountSold = 0 },
+                new { Name = "Illustrerad Vetenskap", Category = "Tidningar", Price = 79.00, AmountSold = 0 },
+                new { Name = "Kalle Anka & Co", Category = "Tidningar", Price = 45.00, AmountSold = 0 },
+                new { Name = "Allt om Mat", Category = "Tidningar", Price = 69.00, AmountSold = 0 },
             };
 
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
@@ -63,20 +63,20 @@ namespace Tests
 
                 using (var tx = connection.BeginTransaction())
                 using (var cmd = new SQLiteCommand(@"
-                            INSERT INTO products(Name, Category, Price, Stock)
-                            VALUES (@name, @category, @price, @stock)", connection, tx))
+                            INSERT INTO products(Name, Category, Price, AmountSold)
+                            VALUES (@name, @category, @price, @amountSold)", connection, tx))
                 {
                     cmd.Parameters.Add(new SQLiteParameter("@name"));
                     cmd.Parameters.Add(new SQLiteParameter("@category"));
                     cmd.Parameters.Add(new SQLiteParameter("@price"));
-                    cmd.Parameters.Add(new SQLiteParameter("@stock"));
+                    cmd.Parameters.Add(new SQLiteParameter("@amountSold"));
 
                     foreach (var product in products)
                     {
                         cmd.Parameters["@name"].Value = product.Name;
                         cmd.Parameters["@category"].Value = product.Category;
                         cmd.Parameters["@price"].Value = product.Price;
-                        cmd.Parameters["@stock"].Value = product.Stock;
+                        cmd.Parameters["@amountSold"].Value = product.AmountSold;
                         cmd.ExecuteNonQuery();
                     }
                     tx.Commit();
