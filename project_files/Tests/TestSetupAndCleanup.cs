@@ -11,7 +11,7 @@ namespace Tests
     {
 
         private static readonly string fileLocation = @".\databases\POSDB.db";
-        private static readonly string connectionString = @"Data Source=.\databases\POSDB.db;Version=3;";
+        public static readonly string connectionString = @"Data Source=.\databases\POSDB.db;Version=3;";
 
         public static void InitializeTestDatabase()
         {
@@ -19,7 +19,7 @@ namespace Tests
             file.Directory.Create();
             SQLiteConnection.CreateFile(fileLocation);
 
-            using (var connection = new SQLiteConnection(@"Data Source=.\databases\POSDB.db;Version=3;"))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
                 string createProductsTableQuery = @"
