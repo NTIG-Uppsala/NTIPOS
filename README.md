@@ -3,6 +3,7 @@ Point of sale system
 
 ## Links to dev info docs
 
+* [Documentation](_dev_info/Documentation.md)
 * [Coding Standards](_dev_info/CodingStandard.md)
 * [Definition of Done](_dev_info/DoD.md)
 * [Development Environment Standards](_dev_info/DevelopmentEnvironmentStandards.md)
