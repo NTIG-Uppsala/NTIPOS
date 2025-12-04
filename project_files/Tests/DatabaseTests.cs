@@ -79,7 +79,7 @@ namespace Tests
             }
 
             checkoutButton.Click();
-            Thread.Sleep(1000);
+            Thread.Sleep(1200);
 
             int productAmountSold = Convert.ToInt32(ReadData("SELECT amountSold FROM products WHERE name = 'Kexchoklad'"));
             Assert.AreEqual(12, productAmountSold);

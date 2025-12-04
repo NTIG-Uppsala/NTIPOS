@@ -24,6 +24,7 @@ namespace PointOfSale.ViewModel
             if (!File.Exists(DatabaseHelper.fileLocation))
             {
                 DatabaseHelper.InitializeDatabase();
+                DatabaseHelper.AddCategories();
                 DatabaseHelper.AddProducts();
             }
             getAllProducts(DatabaseHelper.connectionString);
@@ -47,7 +48,8 @@ namespace PointOfSale.ViewModel
                                     reader.GetInt32(reader.GetOrdinal("Id")),
                                     reader.GetString(reader.GetOrdinal("Name")),
                                     reader.GetString(reader.GetOrdinal("Category")),
-                                    reader.GetFloat(reader.GetOrdinal("Price"))
+                                    reader.GetFloat(reader.GetOrdinal("Price")),
+                                    reader.GetString(reader.GetOrdinal("Color"))
                                     ));
                     }
                 }

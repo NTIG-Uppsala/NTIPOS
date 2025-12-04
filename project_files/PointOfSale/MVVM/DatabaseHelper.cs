@@ -1,4 +1,7 @@
-﻿using System;
+﻿using PointOfSale.Model;
+using PointOfSale.View.UserControls;
+using PointOfSale.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
@@ -6,8 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PointOfSale.Model;
-using PointOfSale.ViewModel;
 
 namespace PointOfSale.MVVM
 {
@@ -27,49 +28,46 @@ namespace PointOfSale.MVVM
                 using (var connection = new SQLiteConnection(connectionString))
                 {
                     connection.Open();
+
+                    string createCategoriesTableQuery = @"
+                    CREATE TABLE IF NOT EXISTS categories(
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            name TEXT NOT NULL,
+                            color TEXT NOT NULL
+                    );";
+
                     string createProductsTableQuery = @"
-                        CREATE TABLE IF NOT EXISTS products(
-                                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                name TEXT NOT NULL,
-                                category TEXT NOT NULL,
-                                price FLOAT NOT NULL,
-                                amountSold INTEGER NOT NULL);";
+                    CREATE TABLE IF NOT EXISTS products(
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            name TEXT NOT NULL,
+                            categoryId INTEGER NOT NULL,
+                            price FLOAT NOT NULL,
+                            amountSold INTEGER NOT NULL,
+                            category TEXT NOT NULL,
+                            color TEXT NOT NULL,
+                            FOREIGN KEY (categoryId) REFERENCES categories(id)
+                    );";
 
                     using (var command = new SQLiteCommand(connection))
                     {
                         command.CommandText = createProductsTableQuery;
+                        command.ExecuteNonQuery();
+
+                        command.CommandText = createCategoriesTableQuery;
                         command.ExecuteNonQuery();
                     }
                 }
             }
         }
 
-        public static void AddProducts()
+        public static void AddCategories()
         {
-            var products = new[]
+            var categories = new[]
             {
-                new { Name = "Marlboro Red (20-pack)", Category = "Tobak", Price = 89.00, AmountSold = 0 },
-                new { Name = "Camel Blue (20-pack)", Category = "Tobak", Price = 85.00, AmountSold = 0 },
-                new { Name = "L&M Filter (20-pack)", Category = "Tobak", Price = 79.00, AmountSold = 0 },
-                new { Name = "Skruf Original Portion", Category = "Tobak", Price = 62.00, AmountSold = 0 },
-                new { Name = "Göteborgs Rapé White Portion", Category = "Tobak", Price = 67.00, AmountSold = 0 },
-
-                new { Name = "Marabou Mjölkchoklad 0 g", Category = "Godis", Price = 25.00, AmountSold = 0 },
-                new { Name = "Daim dubbel", Category = "Godis", Price = 15.00, AmountSold = 0 },
-                new { Name = "Kexchoklad", Category = "Godis", Price = 12.00, AmountSold = 0 },
-                new { Name = "Malaco Gott & Blandat 160 g", Category = "Godis", Price = 28.00, AmountSold = 0 },
-
-                new { Name = "Korv med bröd", Category = "Enkel mat", Price = 25.00, AmountSold = 0 },
-                new { Name = "Varm toast (ost & skinka)", Category = "Enkel mat", Price = 30.00, AmountSold = 0 },
-                new { Name = "Pirog (köttfärs)", Category = "Enkel mat", Price = 22.00, AmountSold = 0 },
-                new { Name = "Färdig sallad (kyckling)", Category = "Enkel mat", Price = 49.00, AmountSold = 0 },
-                new { Name = "Panini (mozzarella & pesto)", Category = "Enkel mat", Price = 45.00, AmountSold = 0 },
-
-                new { Name = "Aftonbladet (dagens)", Category = "Tidningar", Price = 28.00, AmountSold = 0 },
-                new { Name = "Expressen (dagens)", Category = "Tidningar", Price = 28.00, AmountSold = 0 },
-                new { Name = "Illustrerad Vetenskap", Category = "Tidningar", Price = 79.00, AmountSold = 0 },
-                new { Name = "Kalle Anka & Co", Category = "Tidningar", Price = 45.00, AmountSold = 0 },
-                new { Name = "Allt om Mat", Category = "Tidningar", Price = 69.00, AmountSold = 0 },
+                new { Name = "Tobak", Color = "SaddleBrown"},
+                new { Name = "Godis", Color = "LightPink"},
+                new { Name = "Enkel mat", Color = "Orange"},
+                new { Name = "Tidningar", Color = "LightBlue"},
             };
 
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
@@ -78,20 +76,80 @@ namespace PointOfSale.MVVM
 
                 using (var tx = connection.BeginTransaction())
                 using (var cmd = new SQLiteCommand(@"
-                            INSERT INTO products(Name, Category, Price, AmountSold)
-                            VALUES (@name, @category, @price, @amountSold)", connection, tx))
+                            INSERT INTO categories(Name, Color)
+                            VALUES (@name, @color)", connection, tx))
                 {
                     cmd.Parameters.Add(new SQLiteParameter("@name"));
-                    cmd.Parameters.Add(new SQLiteParameter("@category"));
+                    cmd.Parameters.Add(new SQLiteParameter("@color"));
+
+                    foreach (var category in categories)
+                    {
+                        cmd.Parameters["@name"].Value = category.Name;
+                        cmd.Parameters["@color"].Value = category.Color;
+                        cmd.ExecuteNonQuery();
+                    }
+                    tx.Commit();
+                }
+            }
+        }
+
+        public static void AddProducts()
+        {
+            var products = new[]
+            {
+                new { Name = "Marlboro Red (20-pack)", CategoryID = 1, Price = 89.00 },
+                new { Name = "Camel Blue (20-pack)", CategoryID = 1, Price = 85.00 },
+                new { Name = "L&M Filter (20-pack)", CategoryID = 1, Price = 79.00 },
+                new { Name = "Skruf Original Portion", CategoryID = 1, Price = 62.00 },
+                new { Name = "Göteborgs Rapé White Portion", CategoryID = 1, Price = 67.00 },
+
+                new { Name = "Marabou Mjölkchoklad 100 g", CategoryID = 2, Price = 25.00 },
+                new { Name = "Daim dubbel", CategoryID = 2, Price = 15.00 },
+                new { Name = "Kexchoklad", CategoryID = 2, Price = 12.00 },
+                new { Name = "Malaco Gott & Blandat 160 g", CategoryID = 2, Price = 28.00 },
+
+                new { Name = "Korv med bröd", CategoryID = 3, Price = 25.00 },
+                new { Name = "Varm toast (ost & skinka)", CategoryID = 3, Price = 30.00 },
+                new { Name = "Pirog (köttfärs)", CategoryID = 3, Price = 22.00 },
+                new { Name = "Färdig sallad (kyckling)", CategoryID = 3, Price = 49.00 },
+                new { Name = "Panini (mozzarella & pesto)", CategoryID = 3, Price = 45.00 },
+
+                new { Name = "Aftonbladet (dagens)", CategoryID = 4, Price = 28.00 },
+                new { Name = "Expressen (dagens)", CategoryID = 4, Price = 28.00 },
+                new { Name = "Illustrerad Vetenskap", CategoryID = 4, Price = 79.00 },
+                new { Name = "Kalle Anka & Co", CategoryID = 4, Price = 45.00 },
+                new { Name = "Allt om Mat", CategoryID = 4, Price = 69.00 },
+            };
+
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (var tx = connection.BeginTransaction())
+                using (var cmd = new SQLiteCommand(@"
+                            INSERT INTO products(Name, CategoryID, Price, AmountSold, Category, Color)
+                            VALUES (@name, @categoryId, @price, @amountSold, @category, @color)", connection, tx))
+                {
+                    cmd.Parameters.Add(new SQLiteParameter("@name"));
+                    cmd.Parameters.Add(new SQLiteParameter("@categoryId"));
                     cmd.Parameters.Add(new SQLiteParameter("@price"));
                     cmd.Parameters.Add(new SQLiteParameter("@amountSold"));
+                    cmd.Parameters.Add(new SQLiteParameter("@category"));
+                    cmd.Parameters.Add(new SQLiteParameter("@color"));
 
                     foreach (var product in products)
                     {
                         cmd.Parameters["@name"].Value = product.Name;
-                        cmd.Parameters["@category"].Value = product.Category;
+                        cmd.Parameters["@categoryId"].Value = product.CategoryID;
                         cmd.Parameters["@price"].Value = product.Price;
-                        cmd.Parameters["@amountSold"].Value = product.AmountSold;
+                        cmd.Parameters["@amountSold"].Value = 0;
+
+                        string category = ReadData($"SELECT name FROM categories WHERE id = '{product.CategoryID}'");
+                        string colorString = ReadData($"SELECT color FROM categories WHERE id = '{product.CategoryID}'");
+
+                        cmd.Parameters["@category"].Value = category;
+                        cmd.Parameters["@color"].Value = colorString;
+
                         cmd.ExecuteNonQuery();
                     }
                     tx.Commit();

@@ -22,26 +22,7 @@
                     <DataTemplate>
                         <Grid Margin="3">
                             <!-- mask for rounded corners-->
-                            <Border Name="mask" Grid.Row="1" CornerRadius="20">
-                                <Border.Style>
-                                    <Style>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Category}" Value="Tobak">
-                                                <Setter Property="Border.Background" Value="SaddleBrown"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Category}" Value="Godis">
-                                                <Setter Property="Border.Background" Value="LightPink"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Category}" Value="Enkel mat">
-                                                <Setter Property="Border.Background" Value="Orange"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Category}" Value="Tidningar">
-                                                <Setter Property="Border.Background" Value="LightBlue"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Border.Style>
-                            </Border>
+                            <Border Name="mask" Grid.Row="1" CornerRadius="20" Background="{Binding Color}"/>
 
                             <Button Name="ProductButton" FontWeight="Bold" Height="82" FontSize="18" Width="160" Click="ProductButton_Click">
                                 <Button.Style>

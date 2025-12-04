@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace PointOfSale.Model
 {
@@ -28,12 +29,16 @@ namespace PointOfSale.Model
             }
         }
 
-        public Product(int id, string productName, string categoryName, float price)
+        public Brush Color
+        { get; set; }
+
+        public Product(int id, string productName, string categoryName, float price, string colorString)
         {
             Id = id;
             Name = productName;
             Category = categoryName;
             Price = price;
+            Color = (Brush) new BrushConverter().ConvertFromString(colorString);
         }
     }
 }
