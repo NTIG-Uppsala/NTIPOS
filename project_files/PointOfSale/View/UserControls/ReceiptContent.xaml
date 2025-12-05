@@ -10,65 +10,40 @@
     
     <Grid Background="#adadad">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="Auto" MinWidth="350"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <!-- RECEIPT LIST DISPLAY -->
-        <ListView Name="ReceiptsView" 
+        <DataGrid Name="ReceiptsView"
                   Grid.Column="0" 
                   SelectionMode="Single" 
                   Margin="20" 
                   BorderBrush="black" 
                   BorderThickness="2" 
                   ItemsSource="{Binding Receipts}"
-                  SelectedItem="{Binding SelectedItem}">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    <Setter Property="FontSize" Value="20"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="ListViewItem">
-                                <Grid>
-                                    <Border Name="Border" BorderThickness="0,1,0,1" Background="Transparent">
-                                        <ContentPresenter x:Name="ContentSite" RecognizesAccessKey="True"/>
-                                    </Border>
-                                </Grid>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsSelected" Value="True">
-                                        <Setter TargetName="Border" Property="Background" Value="Yellow"/>
-                                        <Setter TargetName="Border" Property="BorderBrush" Value="Black"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
+                  SelectedItem="{Binding SelectedItem}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  CanUserResizeColumns="False">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Style.Triggers>
+                        <Trigger Property="DataGridCell.IsSelected" Value="True">
+                            <Setter Property="Background" Value="Yellow" />
+                            <Setter Property="BorderThickness" Value="0.5,1,0.5,1"/>
+                            <Setter Property="BorderBrush" Value="Black"/>
+                        </Trigger>
+                    </Style.Triggers>
+                    <Setter Property="Foreground" Value="Black"/>
                 </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Margin="10,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Name="ReceiptID" TextWrapping="Wrap" Text="{Binding ID}"/>
-                        <TextBlock Grid.Row="1" Name="ReceiptTimestamp" Text="{Binding Time}"/>
-                        <Border Grid.Column="1">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Name="ReceiptSum" DockPanel.Dock="Right" Text="{Binding TotalSumFormatted}"/>
-                                <TextBlock DockPanel.Dock="Right" Text=" kr"/>
-                            </StackPanel>
-                        </Border>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="#" Binding="{Binding ID}"/>
+                <DataGridTextColumn Header="Tid" Binding="{Binding Time}"/>
+                <DataGridTextColumn Header="Summa" Binding="{Binding TotalSumFormatted}"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
         <!-- RECEIPT INFO DISPLAY -->
         <Border Grid.Column="1" Margin="30,20" BorderBrush="Black" BorderThickness="2">

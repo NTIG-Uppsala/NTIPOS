@@ -63,10 +63,10 @@ namespace Tests
 
             receiptsTab.Click();
             var receiptList = mainWindow.FindFirstDescendant(cf.ByAutomationId("ReceiptsView"));
-            var receipt = receiptList.FindFirstDescendant(cf.ByClassName("ListBoxItem"));
+            var receipt = receiptList.FindFirstDescendant(cf.ByClassName("DataGridRow"));
 
-            Assert.AreEqual("0", receipt.FindFirstDescendant(cf.ByAutomationId("ReceiptID")).Name);
-            Assert.AreEqual("12,00", receipt.FindFirstDescendant(cf.ByAutomationId("ReceiptSum")).Name);
+            Assert.IsTrue(receipt.FindFirstDescendant(cf.ByName("0")) is not null);
+            Assert.IsTrue(receipt.FindFirstDescendant(cf.ByName("12,00")) is not null);
 
             Assert.IsTrue(Directory.Exists(receiptsDirectory));
 
@@ -86,7 +86,7 @@ namespace Tests
 
             receiptsTab.Click();
             var receiptList = mainWindow.FindFirstDescendant(cf.ByAutomationId("ReceiptsView"));
-            var receipt = receiptList.FindFirstDescendant(cf.ByClassName("ListBoxItem"));
+            var receipt = receiptList.FindFirstDescendant(cf.ByClassName("DataGridRow"));
 
             receipt.Click();
 
@@ -96,6 +96,47 @@ namespace Tests
             Assert.IsTrue(Directory.Exists(receiptsDirectory));
 
             Assert.AreEqual(2, Directory.GetFiles(receiptsDirectory).Length);
+        }
+
+        [TestMethod]
+        public void SortReceipts()
+        {
+            var addProductButton = mainWindow.FindFirstDescendant(cf.ByName("Kalle Anka & Co"));
+            var checkoutButton = mainWindow.FindFirstDescendant(cf.ByAutomationId("CheckoutButton"));
+            var receiptsTab = mainWindow.FindFirstDescendant(cf.ByName("Kvitton"));
+
+            // Add a receipt 
+            addProductButton.Click();
+            checkoutButton.Click();
+
+            // Add a receipt with higer total
+            addProductButton.Click();
+            addProductButton.Click();
+            checkoutButton.Click();
+
+            // Enter the Receipts view
+            receiptsTab.Click();
+            var receiptList = mainWindow.FindFirstDescendant(cf.ByAutomationId("ReceiptsView"));
+            var firstReceipt = receiptList.FindFirstDescendant(cf.ByClassName("DataGridRow"));
+
+            Assert.IsTrue(firstReceipt.FindFirstDescendant(cf.ByName("1")) is not null);
+
+            // Sort by ascending price
+            var sortByTotalSumButton = receiptList.FindFirstDescendant(cf.ByName("Summa"));
+            sortByTotalSumButton.Click();
+            
+            firstReceipt = receiptList.FindFirstDescendant(cf.ByClassName("DataGridRow"));
+
+            Assert.IsTrue(firstReceipt.FindFirstDescendant(cf.ByName("45,00")) is not null);
+
+            // Sort by decending time
+            var sortByTimeButton = receiptList.FindFirstDescendant(cf.ByName("Tid"));
+            sortByTimeButton.Click();
+            sortByTimeButton.Click();
+            
+            firstReceipt = receiptList.FindFirstDescendant(cf.ByClassName("DataGridRow"));
+
+            Assert.IsTrue(firstReceipt.FindFirstDescendant(cf.ByName("1")) is not null);
         }
     }
 }
