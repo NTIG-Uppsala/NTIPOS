@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,8 +33,8 @@ namespace PointOfSale.MVVM
                     string createCategoriesTableQuery = @"
                     CREATE TABLE IF NOT EXISTS categories(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            name TEXT NOT NULL,
-                            color TEXT NOT NULL
+                            categoryName TEXT NOT NULL,
+                            categoryColor TEXT NOT NULL
                     );";
 
                     string createProductsTableQuery = @"
@@ -43,8 +44,8 @@ namespace PointOfSale.MVVM
                             categoryId INTEGER NOT NULL,
                             price FLOAT NOT NULL,
                             amountSold INTEGER NOT NULL,
-                            category TEXT NOT NULL,
-                            color TEXT NOT NULL,
+                            category TEXT,
+                            color TEXT,
                             FOREIGN KEY (categoryId) REFERENCES categories(id)
                     );";
 
@@ -76,16 +77,16 @@ namespace PointOfSale.MVVM
 
                 using (var tx = connection.BeginTransaction())
                 using (var cmd = new SQLiteCommand(@"
-                            INSERT INTO categories(Name, Color)
-                            VALUES (@name, @color)", connection, tx))
+                            INSERT INTO categories(CategoryName, CategoryColor)
+                            VALUES (@categoryName, @categoryColor)", connection, tx))
                 {
-                    cmd.Parameters.Add(new SQLiteParameter("@name"));
-                    cmd.Parameters.Add(new SQLiteParameter("@color"));
+                    cmd.Parameters.Add(new SQLiteParameter("@categoryName"));
+                    cmd.Parameters.Add(new SQLiteParameter("@categoryColor"));
 
                     foreach (var category in categories)
                     {
-                        cmd.Parameters["@name"].Value = category.Name;
-                        cmd.Parameters["@color"].Value = category.Color;
+                        cmd.Parameters["@categoryName"].Value = category.Name;
+                        cmd.Parameters["@categoryColor"].Value = category.Color;
                         cmd.ExecuteNonQuery();
                     }
                     tx.Commit();
@@ -127,15 +128,13 @@ namespace PointOfSale.MVVM
 
                 using (var tx = connection.BeginTransaction())
                 using (var cmd = new SQLiteCommand(@"
-                            INSERT INTO products(Name, CategoryID, Price, AmountSold, Category, Color)
-                            VALUES (@name, @categoryId, @price, @amountSold, @category, @color)", connection, tx))
+                            INSERT INTO products(Name, CategoryID, Price, AmountSold)
+                            VALUES (@name, @categoryId, @price, @amountSold)", connection, tx))
                 {
                     cmd.Parameters.Add(new SQLiteParameter("@name"));
                     cmd.Parameters.Add(new SQLiteParameter("@categoryId"));
                     cmd.Parameters.Add(new SQLiteParameter("@price"));
                     cmd.Parameters.Add(new SQLiteParameter("@amountSold"));
-                    cmd.Parameters.Add(new SQLiteParameter("@category"));
-                    cmd.Parameters.Add(new SQLiteParameter("@color"));
 
                     foreach (var product in products)
                     {
@@ -144,15 +143,26 @@ namespace PointOfSale.MVVM
                         cmd.Parameters["@price"].Value = product.Price;
                         cmd.Parameters["@amountSold"].Value = 0;
 
-                        string category = ReadData($"SELECT name FROM categories WHERE id = '{product.CategoryID}'");
-                        string colorString = ReadData($"SELECT color FROM categories WHERE id = '{product.CategoryID}'");
-
-                        cmd.Parameters["@category"].Value = category;
-                        cmd.Parameters["@color"].Value = colorString;
-
                         cmd.ExecuteNonQuery();
                     }
                     tx.Commit();
+                }
+
+                foreach (var product in products)
+                {
+                    string category = ReadData($"SELECT categoryName FROM products INNER JOIN categories ON products.categoryId=categories.id WHERE name = '{product.Name}'");
+
+                    string colorString = ReadData($"SELECT categoryColor FROM products INNER JOIN categories ON products.categoryId=categories.id WHERE name = '{product.Name}'");
+
+                    using (var cmd = new SQLiteCommand($"UPDATE products SET category = '{category}' WHERE name = '{product.Name}'", connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (var cmd = new SQLiteCommand($"UPDATE products SET color = '{colorString}' WHERE name = '{product.Name}'", connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
                 }
             }
         }
