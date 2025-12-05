@@ -44,8 +44,6 @@ namespace PointOfSale.MVVM
                             categoryId INTEGER NOT NULL,
                             price FLOAT NOT NULL,
                             amountSold INTEGER NOT NULL,
-                            category TEXT,
-                            color TEXT,
                             FOREIGN KEY (categoryId) REFERENCES categories(id)
                     );";
 
@@ -146,23 +144,6 @@ namespace PointOfSale.MVVM
                         cmd.ExecuteNonQuery();
                     }
                     tx.Commit();
-                }
-
-                foreach (var product in products)
-                {
-                    string category = ReadData($"SELECT categoryName FROM products INNER JOIN categories ON products.categoryId=categories.id WHERE name = '{product.Name}'");
-
-                    string colorString = ReadData($"SELECT categoryColor FROM products INNER JOIN categories ON products.categoryId=categories.id WHERE name = '{product.Name}'");
-
-                    using (var cmd = new SQLiteCommand($"UPDATE products SET category = '{category}' WHERE name = '{product.Name}'", connection))
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    using (var cmd = new SQLiteCommand($"UPDATE products SET color = '{colorString}' WHERE name = '{product.Name}'", connection))
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
                 }
             }
         }

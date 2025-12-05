@@ -37,7 +37,8 @@ namespace PointOfSale.ViewModel
             using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                string query = "SELECT * FROM products";
+                string query = "SELECT *, categoryName, categoryColor FROM products INNER JOIN categories ON products.categoryId=categories.id";
+                    // string category = ReadData($"SELECT categoryName FROM products INNER JOIN categories ON products.categoryId=categories.id WHERE name = '{product.Name}'");
 
                 using (SQLiteCommand command = new SQLiteCommand(query, connection))
                 using (SQLiteDataReader reader = command.ExecuteReader())
@@ -47,9 +48,9 @@ namespace PointOfSale.ViewModel
                         Products.Add(new Product(
                                     reader.GetInt32(reader.GetOrdinal("Id")),
                                     reader.GetString(reader.GetOrdinal("Name")),
-                                    reader.GetString(reader.GetOrdinal("Category")),
+                                    reader.GetString(reader.GetOrdinal("CategoryName")),
                                     reader.GetFloat(reader.GetOrdinal("Price")),
-                                    reader.GetString(reader.GetOrdinal("Color"))
+                                    reader.GetString(reader.GetOrdinal("CategoryColor"))
                                     ));
                     }
                 }
