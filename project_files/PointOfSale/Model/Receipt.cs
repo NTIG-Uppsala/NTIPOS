@@ -42,7 +42,7 @@ namespace PointOfSale.Model
             Time = receiptTime;
             ID = receiptID;
             TotalSum = ReceiptTotalSum;
-            VAT = (float)(TotalSum * 0.25);
+            VAT = (float)(TotalSum * 0.20);
         }
     }
 }
