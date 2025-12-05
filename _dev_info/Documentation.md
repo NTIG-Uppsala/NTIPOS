@@ -5,12 +5,20 @@ This is a wpf point of sale system for a kiosk that loads products from a databa
 ## Database
 
 The program uses a local SQLite database to store products.  
+
+The categories are stored in a table with the columns:
+* id, int, auto generated primary key
+* name, string, the name of the category
+* color, string, the color of the category as a string
+
 The products are stored in a table with the columns:
 * id, int, auto generated primary key
 * name, string, the product name shown to the user
-* category, string, the category for the product
+* categoryId, int, foreign key from categories table, the id of the category for the product
 * price, float, the product price
 * amountSold, int, the amount of the product that has been sold in the system 
+* category, string, the actual category retrieved from the categories table
+* color, string, the color of the category retrieved from the categories table
 
 The program will automatically generate buttons in the GUI based on the products in the database.  
 If there is no database when the program starts it will generate a database based on hard coded products.  
