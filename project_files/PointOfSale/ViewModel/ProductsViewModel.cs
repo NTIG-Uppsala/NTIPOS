@@ -38,7 +38,6 @@ namespace PointOfSale.ViewModel
             {
                 connection.Open();
                 string query = "SELECT *, categoryName, categoryColor FROM products INNER JOIN categories ON products.categoryId=categories.id";
-                    // string category = ReadData($"SELECT categoryName FROM products INNER JOIN categories ON products.categoryId=categories.id WHERE name = '{product.Name}'");
 
                 using (SQLiteCommand command = new SQLiteCommand(query, connection))
                 using (SQLiteDataReader reader = command.ExecuteReader())
