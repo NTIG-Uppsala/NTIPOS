@@ -47,12 +47,34 @@ namespace PointOfSale.MVVM
                             FOREIGN KEY (categoryId) REFERENCES categories(id)
                     );";
 
+                    string createReceiptsTableQuery = @"
+                        CREATE TABLE IF NOT EXISTS receipts(
+                                id INTEGER PRIMARY KEY,
+                                time TEXT NOT NULL
+                                );";
+
+                    string createReceiptArticlesTebleQuery = @"
+                        CREATE TABLE IF NOT EXISTS receiptArticles(
+                                id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                                name TEXT NOT NULL, 
+                                price FLOAT NOT NULL, 
+                                quantity INTEGER NOT NULL, 
+                                receiptId INTEGER NOT NULL,
+                                FOREIGN KEY (receiptId) REFERENCES receipts(id)
+                                );";
+
                     using (var command = new SQLiteCommand(connection))
                     {
                         command.CommandText = createProductsTableQuery;
                         command.ExecuteNonQuery();
 
                         command.CommandText = createCategoriesTableQuery;
+                        command.ExecuteNonQuery();
+
+                        command.CommandText = createReceiptsTableQuery;
+                        command.ExecuteNonQuery();
+
+                        command.CommandText = createReceiptArticlesTebleQuery;
                         command.ExecuteNonQuery();
                     }
                 }
@@ -174,6 +196,53 @@ namespace PointOfSale.MVVM
                     {
                         cmd.ExecuteNonQuery();
                     }
+                }
+            }
+        }
+
+        public static void AddReceipt(Receipt receipt)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (var tx = connection.BeginTransaction())
+                using (var cmd = new SQLiteCommand(@"
+                            INSERT INTO receipts(Id, Time)
+                            VALUES (@id, @time)", connection, tx))
+                {
+                    cmd.Parameters.Add(new SQLiteParameter("@id"));
+                    cmd.Parameters.Add(new SQLiteParameter("@time"));
+
+                    cmd.Parameters["@id"].Value = receipt.ID;
+                    cmd.Parameters["@time"].Value = receipt.Time;
+
+                    cmd.ExecuteNonQuery();
+
+                    tx.Commit();
+                }
+
+                using (var tx = connection.BeginTransaction())
+                using (var cmd = new SQLiteCommand(@"
+                            INSERT INTO receiptArticles(Name, Price, Quantity, ReceiptId)
+                            VALUES (@name, @price, @quantity, @receiptId)", connection, tx))
+                {
+                        cmd.Parameters.Add(new SQLiteParameter("@name"));
+                        cmd.Parameters.Add(new SQLiteParameter("@price"));
+                        cmd.Parameters.Add(new SQLiteParameter("@quantity"));
+                        cmd.Parameters.Add(new SQLiteParameter("@receiptId"));
+
+                    foreach (var article in receipt.ArticleList)
+                    {
+                        cmd.Parameters["@name"].Value = article.Product.Name;
+                        cmd.Parameters["@price"].Value = article.Product.Price;
+                        cmd.Parameters["@quantity"].Value = article.Quantity;
+                        cmd.Parameters["@receiptId"].Value = receipt.ID;
+
+                        cmd.ExecuteNonQuery();
+                    }
+                     
+                    tx.Commit();
                 }
             }
         }

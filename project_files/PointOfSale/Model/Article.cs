@@ -51,5 +51,12 @@ namespace PointOfSale.Model
             Quantity = 1;
             Sum = Product.Price * Quantity;
         }
+
+        public Article(Product product, int quantity)
+        {
+            Product = product;
+            Quantity = quantity;
+            Sum = Product.Price * Quantity;
+        }
     }
 }

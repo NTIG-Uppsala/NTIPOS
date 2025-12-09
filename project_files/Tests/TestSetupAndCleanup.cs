@@ -51,12 +51,34 @@ namespace Tests
                             FOREIGN KEY (categoryId) REFERENCES categories(id)
                     );";
 
+                string createReceiptsTableQuery = @"
+                    CREATE TABLE IF NOT EXISTS receipts(
+                            id INTEGER PRIMARY KEY,
+                            time TEXT NOT NULL
+                    );";
+
+                string createReceiptArticlesTebleQuery = @"
+                    CREATE TABLE IF NOT EXISTS receiptArticles(
+                            id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                            name TEXT NOT NULL, 
+                            price FLOAT NOT NULL, 
+                            quantity INTEGER NOT NULL, 
+                            receiptId INTEGER NOT NULL,
+                            FOREIGN KEY (receiptId) REFERENCES receipts(id)
+                    );";
+
                 using (var command = new SQLiteCommand(connection))
                 {
                     command.CommandText = createProductsTableQuery;
                     command.ExecuteNonQuery();
 
                     command.CommandText = createCategoriesTableQuery;
+                    command.ExecuteNonQuery();
+                    
+                    command.CommandText = createReceiptsTableQuery;
+                    command.ExecuteNonQuery();
+                    
+                    command.CommandText = createReceiptArticlesTebleQuery;
                     command.ExecuteNonQuery();
                 }
             }

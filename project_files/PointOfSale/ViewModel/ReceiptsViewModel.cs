@@ -14,6 +14,7 @@ using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
 using System.Globalization;
+using System.Data.SQLite;
 
 namespace PointOfSale.ViewModel
 {
@@ -41,6 +42,8 @@ namespace PointOfSale.ViewModel
         public ReceiptsViewModel()
         {
             Receipts = new ObservableCollection<Receipt> { };
+            
+            GetAllReceipts(DatabaseHelper.connectionString);
         }
 
         public void AddReceipt(ObservableCollection<Article> articleCollection, float totalSumInt)
@@ -58,9 +61,65 @@ namespace PointOfSale.ViewModel
 
             int receiptID = currentID;
 
-            Receipts.Insert(0, new Receipt(articleList, formattedTime, receiptID, totalSumInt));
+            Receipt receipt = new Receipt(articleList, formattedTime, receiptID, totalSumInt);
+            Receipts.Insert(0, receipt);
 
             currentID++;
+
+            DatabaseHelper.AddReceipt(receipt);
+        }
+
+        public void GetAllReceipts(string connectionString)
+        {
+            Receipts.Clear();
+
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string receiptQuery = "SELECT * FROM receipts ORDER BY id DESC";
+                
+                using (var receiptCommand = new SQLiteCommand(receiptQuery, connection))
+                using (SQLiteDataReader receiptReader = receiptCommand.ExecuteReader())
+                {
+                    while (receiptReader.Read())
+                    {
+                    var receiptArticles = new List<ReceiptArticle>();
+                    float receiptSum = 0;
+
+                        int receiptId = receiptReader.GetInt32(receiptReader.GetOrdinal("Id"));
+
+                        string articleQuery = "SELECT * FROM receiptArticles " + 
+                                            $"WHERE receiptId = '{receiptId}'";
+                        
+                        using (var articleCommand = new SQLiteCommand(articleQuery, connection))
+                        using (SQLiteDataReader articleReader = articleCommand.ExecuteReader())
+                        {
+                            while (articleReader.Read())
+                            {
+                                var article = new Article(new Product(
+                                            0,
+                                            articleReader.GetString(articleReader.GetOrdinal("Name")),
+                                            "",
+                                            articleReader.GetFloat(articleReader.GetOrdinal("Price")),
+                                            "Black"
+                                            ), articleReader.GetInt32(articleReader.GetOrdinal("Quantity"))
+                                );
+                                receiptArticles.Add(new ReceiptArticle(article));
+                                receiptSum += article.Sum;
+                            }
+                        }
+
+                        Receipts.Add(new Receipt(
+                                    receiptArticles,
+                                    receiptReader.GetString(receiptReader.GetOrdinal("Time")),
+                                    receiptId,
+                                    receiptSum
+                                    ));
+                        currentID++;
+                    }
+                }
+            }
+
         }
 
         public void PrintReceipt(Receipt receipt)
