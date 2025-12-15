@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PointOfSale"
         xmlns:UserControls="clr-namespace:PointOfSale.View.UserControls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="1100">
+        Title="Kassasystem" Height="900" Width="1100">
     
     <!-- WINDOW RESOURCES -->
     <Window.Resources>
