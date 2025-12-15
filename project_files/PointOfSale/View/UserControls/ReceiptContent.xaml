@@ -41,7 +41,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="#" Binding="{Binding ID}"/>
                 <DataGridTextColumn Header="Tid" Binding="{Binding Time}"/>
-                <DataGridTextColumn Header="Summa" Binding="{Binding TotalSumFormatted}"/>
+                <DataGridTextColumn Header="Summa" Binding="{Binding TotalSum, ConverterCulture='sv-SE', StringFormat={}{0:#,#.00}}"/>
             </DataGrid.Columns>
         </DataGrid>
 

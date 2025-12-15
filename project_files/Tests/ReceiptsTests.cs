@@ -157,6 +157,7 @@ namespace Tests
             // Add a receipt with higer total
             addProductButton.Click();
             addProductButton.Click();
+            addProductButton.Click();
             checkoutButton.Click();
 
             // Enter the Receipts view
@@ -167,12 +168,12 @@ namespace Tests
             Assert.IsTrue(firstReceipt.FindFirstDescendant(cf.ByName("2")) is not null);
 
             // Sort by ascending price
-            // var sortByTotalSumButton = receiptList.FindFirstDescendant(cf.ByName("Summa"));
-            // sortByTotalSumButton.Click();
-            //
-            // firstReceipt = receiptList.FindFirstDescendant(cf.ByClassName("DataGridRow"));
-            //
-            // Assert.IsTrue(firstReceipt.FindFirstDescendant(cf.ByName("45,00")) is not null);
+            var sortByTotalSumButton = receiptList.FindFirstDescendant(cf.ByName("Summa"));
+            sortByTotalSumButton.Click();
+
+            firstReceipt = receiptList.FindFirstDescendant(cf.ByClassName("DataGridRow"));
+
+            Assert.IsTrue(firstReceipt.FindFirstDescendant(cf.ByName("45,00")) is not null);
 
             // Sort by decending time
             var sortByTimeButton = receiptList.FindFirstDescendant(cf.ByName("Tid"));
