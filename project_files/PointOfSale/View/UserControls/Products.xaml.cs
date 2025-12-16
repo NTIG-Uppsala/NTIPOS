@@ -29,13 +29,18 @@ namespace PointOfSale.View.UserControls
         public Products()
         {
             InitializeComponent();
-            DataContext = new ProductsViewModel();
+            DataContext = ProductsViewModel.ProductsVM;
         }
 
         private void ProductButton_Click(object sender, RoutedEventArgs e)
         {
             Product product = (sender as FrameworkElement).DataContext as Product;
             ArticlesViewModel.ArticlesVM.AddProduct(product);
+        }
+
+        private void CategoryButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

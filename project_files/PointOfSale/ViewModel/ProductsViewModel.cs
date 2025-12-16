@@ -16,10 +16,12 @@ namespace PointOfSale.ViewModel
     {
         private static ProductsViewModel productsVm = new ProductsViewModel();
         public static ProductsViewModel ProductsVM { get { return productsVm; } }
+        public ObservableCollection<ProductCategory> ProductCategories { get; set; }
         public ObservableCollection<Product> Products { get; set; }
 
         public ProductsViewModel()
         {
+            ProductCategories = new ObservableCollection<ProductCategory>();
             Products = new ObservableCollection<Product>();
             if (!File.Exists(DatabaseHelper.fileLocation))
             {
@@ -27,7 +29,32 @@ namespace PointOfSale.ViewModel
                 DatabaseHelper.AddCategories();
                 DatabaseHelper.AddProducts();
             }
+            getAllCategories(DatabaseHelper.connectionString);
             getAllProducts(DatabaseHelper.connectionString);
+        }
+
+        public void getAllCategories(string connectionString)
+        {
+            ProductCategories.Clear();
+
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string query = "SELECT * FROM categories";
+
+                using (SQLiteCommand command = new SQLiteCommand(query, connection))
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        ProductCategories.Add(new ProductCategory(
+                                    reader.GetInt32(reader.GetOrdinal("Id")),
+                                    reader.GetString(reader.GetOrdinal("CategoryName")),
+                                    reader.GetString(reader.GetOrdinal("CategoryColor"))
+                                    ));
+                    }
+                }
+            }
         }
 
         public void getAllProducts(string connectionString)

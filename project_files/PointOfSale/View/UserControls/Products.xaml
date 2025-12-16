@@ -8,10 +8,47 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Name="productsGrid" x:FieldModifier="public">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+        <ItemsControl ItemsSource="{Binding ProductCategories}" Margin="0,0,0,10">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="3">
+                        <!-- mask for rounded corners-->
+                        <Border Name="mask" Grid.Row="1" CornerRadius="20" Background="{Binding Color}"/>
+
+                        <Button Name="CategoryButton" FontWeight="Bold" Height="50" FontSize="18" Width="120" Click="CategoryButton_Click">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                                    <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                            <Grid Margin="5">
+                                <TextBlock TextWrapping="WrapWithOverflow" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Name}"/>
+                            </Grid>
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding Products}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -21,6 +58,15 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="3">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding }">
+                                            
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
                             <!-- mask for rounded corners-->
                             <Border Name="mask" Grid.Row="1" CornerRadius="20" Background="{Binding Color}"/>
 

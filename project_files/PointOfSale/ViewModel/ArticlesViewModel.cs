@@ -59,15 +59,15 @@ namespace PointOfSale.ViewModel
         public void AddProduct(Product product)
         {
             Article relevantArticle;
-            IEnumerable<Article> hej = Articles.Where(article => article.Product == product);
-            if (!(hej != null && hej.Any()))
+            IEnumerable<Article> wantedArticle = Articles.Where(article => article.Product == product);
+            if (!(wantedArticle != null && wantedArticle.Any()))
             {
                 relevantArticle = new Article(product);
                 Articles.Add(relevantArticle);
             }
             else
             {
-                int relevantArticleIndex = Articles.IndexOf(hej.ElementAt(0));
+                int relevantArticleIndex = Articles.IndexOf(wantedArticle.ElementAt(0));
                 relevantArticle = Articles[relevantArticleIndex];
                 relevantArticle.Quantity++;
                 relevantArticle.Sum = relevantArticle.Quantity * relevantArticle.Product.Price;
