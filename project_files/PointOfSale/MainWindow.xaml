@@ -75,6 +75,12 @@
                 </TabItem.Header>
                 <UserControls:ReceiptContent/>
             </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    Lager
+                </TabItem.Header>
+                <UserControls:StockContent/>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

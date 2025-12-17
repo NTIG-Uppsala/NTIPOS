@@ -189,7 +189,7 @@ namespace PointOfSale.MVVM
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                foreach (var article in articles)
+                foreach (Article article in articles)
                 {
                     string query = $"UPDATE products SET amountSold = amountSold + '{article.Quantity}' WHERE name = '{article.Product.Name}'";
                     using (var cmd = new SQLiteCommand(query, connection))
@@ -198,6 +198,32 @@ namespace PointOfSale.MVVM
                     }
                 }
             }
+
+            foreach (Article article in articles)
+            {
+                UpdateLocalAmountSold(article.Product);
+            }
+        }
+
+        public static void ResetAmountSold(Product product)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string query = $"UPDATE products SET amountSold = '0' WHERE name = '{product.Name}'";
+                using (var cmd = new SQLiteCommand(query, connection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            UpdateLocalAmountSold(product);
+        }
+
+        public static void UpdateLocalAmountSold(Product product)
+        {
+            int amountSold = Convert.ToInt32(ReadData($"SELECT amountSold FROM products WHERE name = '{product.Name}'"));
+            product.AmountSold = amountSold;
         }
 
         public static void AddReceipt(Receipt receipt)

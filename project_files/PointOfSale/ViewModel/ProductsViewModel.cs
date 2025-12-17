@@ -49,7 +49,8 @@ namespace PointOfSale.ViewModel
                                     reader.GetString(reader.GetOrdinal("Name")),
                                     reader.GetString(reader.GetOrdinal("CategoryName")),
                                     reader.GetFloat(reader.GetOrdinal("Price")),
-                                    reader.GetString(reader.GetOrdinal("CategoryColor"))
+                                    reader.GetString(reader.GetOrdinal("CategoryColor")),
+                                    reader.GetInt32(reader.GetOrdinal("AmountSold"))
                                     ));
                     }
                 }
