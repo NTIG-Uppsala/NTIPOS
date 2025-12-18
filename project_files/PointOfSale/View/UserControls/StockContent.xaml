@@ -18,7 +18,7 @@
           Margin="20,20,20,10" 
           BorderBrush="black" 
           BorderThickness="2" 
-          ItemsSource="{Binding Products}"
+          ItemsSource="{Binding DataGridProducts}"
           AutoGenerateColumns="False"
           IsReadOnly="True"
           CanUserResizeColumns="False">
@@ -73,7 +73,7 @@
             x:Name="UpdateStockButton" 
             Grid.Row="1" 
             Margin="20,0,20,20" 
-            Width="350" 
+            Width="auto" 
             Height="80" 
             HorizontalAlignment="Right"
             Label="Uppdatera Lagerstatus" 

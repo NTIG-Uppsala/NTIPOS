@@ -1,5 +1,6 @@
 ﻿using PointOfSale.Model;
 using PointOfSale.MVVM;
+using PointOfSale.View.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,19 +9,23 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace PointOfSale.ViewModel
 {
-    public class ProductsViewModel
+    public class ProductsViewModel : ViewModelBase
     {
         private static ProductsViewModel productsVm = new ProductsViewModel();
         public static ProductsViewModel ProductsVM { get { return productsVm; } }
         public ObservableCollection<Product> Products { get; set; }
+        public ObservableCollection<Product> DataGridProducts { get; set; }
 
         public ProductsViewModel()
         {
             Products = new ObservableCollection<Product>();
+            DataGridProducts = new ObservableCollection<Product>();
+
             if (!File.Exists(DatabaseHelper.fileLocation))
             {
                 DatabaseHelper.InitializeDatabase();
@@ -33,6 +38,7 @@ namespace PointOfSale.ViewModel
         public void getAllProducts(string connectionString)
         {
             Products.Clear();
+            DataGridProducts.Clear();
 
             using (var connection = new SQLiteConnection(connectionString))
             {
@@ -44,14 +50,17 @@ namespace PointOfSale.ViewModel
                 {
                     while (reader.Read())
                     {
-                        Products.Add(new Product(
-                                    reader.GetInt32(reader.GetOrdinal("Id")),
-                                    reader.GetString(reader.GetOrdinal("Name")),
-                                    reader.GetString(reader.GetOrdinal("CategoryName")),
-                                    reader.GetFloat(reader.GetOrdinal("Price")),
-                                    reader.GetString(reader.GetOrdinal("CategoryColor")),
-                                    reader.GetInt32(reader.GetOrdinal("AmountSold"))
-                                    ));
+                        Product product = new Product(
+                                reader.GetInt32(reader.GetOrdinal("Id")),
+                                reader.GetString(reader.GetOrdinal("Name")),
+                                reader.GetString(reader.GetOrdinal("CategoryName")),
+                                reader.GetFloat(reader.GetOrdinal("Price")),
+                                reader.GetString(reader.GetOrdinal("CategoryColor")),
+                                reader.GetInt32(reader.GetOrdinal("AmountSold"))
+                                );
+
+                        Products.Add(product);
+                        DataGridProducts.Add(product);
                     }
                 }
             }

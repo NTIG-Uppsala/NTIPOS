@@ -1,4 +1,5 @@
 ﻿using PointOfSale.View.UserControls;
+using PointOfSale.ViewModel;
 using System.Diagnostics;
 using System.Text;
 using System.Windows;
