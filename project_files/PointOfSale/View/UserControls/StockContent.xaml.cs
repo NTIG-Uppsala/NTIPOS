@@ -29,12 +29,13 @@ namespace PointOfSale.View.UserControls
             DataContext = ProductsViewModel.ProductsVM;
         }
 
-        private void UpdateStockButton_Click(object sender, RoutedEventArgs e)
+        private async void UpdateStockButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (Product product in ProductsViewModel.ProductsVM.Products)
             {
                 product.Stock -= product.AmountSold;
                 DatabaseHelper.ResetAmountSold(product);
+                //await DatabaseHelper.GetAsync();
             }
         }
     }

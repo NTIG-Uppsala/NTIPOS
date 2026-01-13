@@ -27,8 +27,18 @@ namespace PointOfSale.Model
             }
         }
 
-        public int AmountSold { get; set; }
-        
+        private int amountSold;
+
+        public int AmountSold
+        {
+            get { return amountSold; }
+            set 
+            { 
+                amountSold = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         private int stock;
 
         public int Stock
