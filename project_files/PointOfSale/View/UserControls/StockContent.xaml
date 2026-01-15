@@ -70,15 +70,55 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <local:GUIButton 
-            x:Name="UpdateStockButton" 
-            Grid.Row="1" 
-            Margin="20,0,20,20" 
-            Width="auto" 
-            Height="80" 
-            HorizontalAlignment="Right"
-            Label="Uppdatera Lagerstatus" 
-            Color="ForestGreen"
-            Click="UpdateStockButton_Click"/>
+        <Grid Margin="20,0,20,20" 
+              Grid.Row="1" 
+              Width="auto" 
+              Height="80" 
+              HorizontalAlignment="Right">
+            
+            <!-- mask for rounded corners-->
+            <Border CornerRadius="20">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=DataContext.IsLoggedIn, RelativeSource={RelativeSource AncestorType={x:Type ContentControl}}}" Value="false">
+                                <Setter Property="Background" Value="Gray"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=DataContext.IsLoggedIn, RelativeSource={RelativeSource AncestorType={x:Type ContentControl}}}" Value="true">
+                                <Setter Property="Background" Value="ForestGreen"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+            </Border>
+
+            <Button Name="UpdateStockButton" FontWeight="Bold" Height="82" FontSize="25" Width="300" Click="UpdateStockButton_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoggedIn}" Value="false">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsLoggedIn}" Value="true">
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Grid Margin="5">
+                    <TextBlock TextWrapping="WrapWithOverflow" VerticalAlignment="Center" TextAlignment="Center" Text="Uppdatera lagerstatus"/>
+                </Grid>
+            </Button>
+        </Grid>
     </Grid>
 </UserControl>

@@ -62,7 +62,7 @@
 
     <!-- CONTENT -->
     <Grid>
-        <TabControl Grid.Row="0" BorderThickness="0" Padding="0">
+        <TabControl Grid.Row="0" BorderThickness="0" Padding="0" >
             <TabItem>
                 <TabItem.Header>
                     Försäljning
@@ -80,6 +80,12 @@
                     Lager
                 </TabItem.Header>
                 <UserControls:StockContent/>
+            </TabItem>
+            <TabItem IsSelected="True">
+                <TabItem.Header>
+                    Inloggning
+                </TabItem.Header>
+                <UserControls:LoginContent/>
             </TabItem>
         </TabControl>
     </Grid>

@@ -25,14 +25,15 @@ namespace Tests
 
             application = Application.Launch(applicationPath);
             mainWindow = application.GetMainWindow(new UIA3Automation());
+            TestSetupAndCleanup.Login(mainWindow, cf);
         }
 
         [TestCleanup]
         public void Cleanup()
         {
             application.Close();
+            TestSetupAndCleanup.RestoreReceiptDirectory();
             TestSetupAndCleanup.RemoveTestDatabase();
-            TestSetupAndCleanup.ProtectUserReceipts();
         }
         [TestMethod]
         public void TestInitialState()

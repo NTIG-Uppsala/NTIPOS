@@ -27,24 +27,17 @@ namespace PointOfSale.View.UserControls
         public ButtonPanel()
         {
             InitializeComponent();
+            DataContext = ButtonPanelViewModel.ButtonPanelVM;
         }
 
         private void AbortButton_Click(object sender, RoutedEventArgs e)
         {
-            ArticlesViewModel.ArticlesVM.ClearBasket();
+            ButtonPanelViewModel.ButtonPanelVM.Abort();
         }
 
         private void CheckoutButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ArticlesViewModel.ArticlesVM.Articles.Any())
-            {
-                float TotalSum = ArticlesViewModel.ArticlesVM.TotalSum;
-                ObservableCollection<Article> ArticleCollection = ArticlesViewModel.ArticlesVM.Articles;
-                ReceiptsViewModel.ReceiptsVM.AddReceipt(ArticleCollection, TotalSum);
-                ReceiptsViewModel.ReceiptsVM.PrintReceipt(ReceiptsViewModel.ReceiptsVM.Receipts[0]);
-                DatabaseHelper.AddAmountSold(ArticleCollection);
-            }
-            ArticlesViewModel.ArticlesVM.ClearBasket();
+            ButtonPanelViewModel.ButtonPanelVM.Checkout();
         }
     }
 }

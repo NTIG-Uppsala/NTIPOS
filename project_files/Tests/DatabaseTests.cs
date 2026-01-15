@@ -36,6 +36,7 @@ namespace Tests
 
             application = Application.Launch(applicationPath);
             mainWindow = application.GetMainWindow(new UIA3Automation());
+            TestSetupAndCleanup.Login(mainWindow, cf);
         }
 
         [TestCleanup]

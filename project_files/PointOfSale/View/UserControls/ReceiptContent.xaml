@@ -122,15 +122,33 @@
         </Border>
         
         <!-- PRINT BUTTON -->
-        <local:GUIButton 
-            x:Name="PrintButton" 
-            Grid.Column="1" 
-            Color="ForestGreen" 
-            Width="120" 
-            Height="60" 
-            VerticalAlignment="Bottom" 
-            Margin="0,0,0,30" 
-            Label="Skriv ut" 
-            Click="PrintButton_Click"/>
+        <Grid Margin="0,0,0,30" 
+              Grid.Column="1"  
+              Width="120" 
+              Height="60" 
+              VerticalAlignment="Bottom">
+            <!-- mask for rounded corners-->
+            <Border CornerRadius="20" Background="ForestGreen"/>
+
+            <Button Name="PrintButton" FontWeight="Bold" Height="82" FontSize="24" Width="160" Click="PrintButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+                <Grid Margin="5">
+                    <TextBlock TextWrapping="WrapWithOverflow" VerticalAlignment="Center" TextAlignment="Center" Text="Skriv ut"/>
+                </Grid>
+            </Button>
+        </Grid>
     </Grid>
 </UserControl>

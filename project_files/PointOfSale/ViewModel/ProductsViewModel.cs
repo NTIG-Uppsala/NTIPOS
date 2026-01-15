@@ -21,6 +21,18 @@ namespace PointOfSale.ViewModel
         public ObservableCollection<Product> Products { get; set; }
         public ObservableCollection<Product> DataGridProducts { get; set; }
 
+        private bool isLoggedIn;
+
+        public bool IsLoggedIn
+        {
+            get { return isLoggedIn; }
+            set
+            {
+                isLoggedIn = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         public ProductsViewModel()
         {
             Products = new ObservableCollection<Product>();
@@ -63,6 +75,20 @@ namespace PointOfSale.ViewModel
                         DataGridProducts.Add(product);
                     }
                 }
+            }
+        }
+        
+        public void ProductButtonMethod(Product product)
+        {
+            ArticlesViewModel.ArticlesVM.AddProduct(product);
+        }
+
+        public void UpdateStock()
+        {
+            foreach (Product product in ProductsViewModel.ProductsVM.Products)
+            {
+                product.Stock -= product.AmountSold;
+                DatabaseHelper.ResetAmountSold(product);
             }
         }
     }

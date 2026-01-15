@@ -22,7 +22,20 @@
                     <DataTemplate>
                         <Grid Margin="3">
                             <!-- mask for rounded corners-->
-                            <Border Name="mask" Grid.Row="1" CornerRadius="20" Background="{Binding Color}"/>
+                            <Border CornerRadius="20">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=DataContext.IsLoggedIn, RelativeSource={RelativeSource AncestorType={x:Type ContentControl}}}" Value="false">
+                                                <Setter Property="Background" Value="Gray"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=DataContext.IsLoggedIn, RelativeSource={RelativeSource AncestorType={x:Type ContentControl}}}" Value="true">
+                                                <Setter Property="Background" Value="{Binding Color}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
 
                             <Button Name="ProductButton" FontWeight="Bold" Height="82" FontSize="18" Width="160" Click="ProductButton_Click">
                                 <Button.Style>
@@ -37,6 +50,14 @@
                                                 </ControlTemplate>
                                             </Setter.Value>
                                         </Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=DataContext.IsLoggedIn, RelativeSource={RelativeSource AncestorType={x:Type ContentControl}}}" Value="false">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=DataContext.IsLoggedIn, RelativeSource={RelativeSource AncestorType={x:Type ContentControl}}}" Value="true">
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
                                     </Style>
                                 </Button.Style>
                                 <Grid Margin="5">

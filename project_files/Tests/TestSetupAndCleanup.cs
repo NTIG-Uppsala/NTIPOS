@@ -1,4 +1,8 @@
-﻿using System;
+﻿using FlaUI.UIA3;
+using FlaUI.Core.AutomationElements;
+using FlaUI.Core.Conditions;
+using FlaUI.Core;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
@@ -13,6 +17,19 @@ namespace Tests
         private static readonly string databaseLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/POS/databases/POSDB.db";
         private static readonly string tempDatabaseLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/POS/databases/tempPOSDB.db";
         public static readonly string connectionString = "Data Source=" + databaseLocation + ";Version=3;";
+
+        public static void Login(Window mainWindow, ConditionFactory cf)
+        {
+            var userIDInput = mainWindow.FindFirstDescendant(cf.ByAutomationId("UserIDInput")).AsTextBox();
+            var loginButton = mainWindow.FindFirstDescendant(cf.ByAutomationId("LoginButton"));
+            var saleTab = mainWindow.FindFirstDescendant(cf.ByName("Försäljning"));
+
+            userIDInput.Click();
+            userIDInput.Enter("testID");
+            loginButton.Click();
+
+            saleTab.Click();
+        }
 
         public static void InitializeTestDatabase()
         {

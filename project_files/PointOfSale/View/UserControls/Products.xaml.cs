@@ -35,7 +35,7 @@ namespace PointOfSale.View.UserControls
         private void ProductButton_Click(object sender, RoutedEventArgs e)
         {
             Product product = (sender as FrameworkElement).DataContext as Product;
-            ArticlesViewModel.ArticlesVM.AddProduct(product);
+            ProductsViewModel.ProductsVM.ProductButtonMethod(product);
         }
     }
 }
