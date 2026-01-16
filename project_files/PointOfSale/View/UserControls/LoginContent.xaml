@@ -12,6 +12,11 @@
         <Style x:Key="AdornerTextStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="Opacity" Value="0.6" />
             <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Width" Value="400" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+        </Style>
+        <Style x:Key="UrlTextStyle" BasedOn="{StaticResource AdornerTextStyle}" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="ForestGreen" />
         </Style>
     </UserControl.Resources>
     <Grid>
@@ -94,8 +99,8 @@
         <StackPanel Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Right" Orientation="Horizontal">
             <StackPanel >
                 <TextBlock Text="Produktdatabas-URL" TextWrapping="Wrap"/>
-                <TextBox x:Name="APIURLInput" Height="60" Width="400" VerticalContentAlignment="Center" 
-                         adorners:Watermark.Text="API URL" adorners:Watermark.TextStyle="{StaticResource AdornerTextStyle}" adorners:Watermark.VisibleWhen="Empty"/>
+                <TextBox x:Name="APIURLInput" Height="60" Width="400" VerticalContentAlignment="Center" Text=""
+                         adorners:Watermark.Text="{Binding ApiUrl}" adorners:Watermark.TextStyle="{StaticResource UrlTextStyle}" adorners:Watermark.VisibleWhen="Empty"/>
             </StackPanel>
             <Button Name="SetAPIURLButton" FontWeight="SemiBold" Width="200" Height="60" FontSize="30" Background="ForestGreen" Click="SetAPIURLButton_Click" VerticalAlignment="Bottom">
                 <Button.Style>

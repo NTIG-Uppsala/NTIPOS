@@ -61,9 +61,16 @@ namespace PointOfSale.ViewModel
         public LoginViewModel()
         {
             LoginStatusMessage = LOGGED_OUT_STATUS_MESSAGE;
-            using (StreamReader reader = new StreamReader(apiUrlFileLocationString))
+            if (File.Exists(apiUrlFileLocationString))
             {
-                ApiUrl = reader.ReadLine();
+                using (StreamReader reader = new StreamReader(apiUrlFileLocationString))
+                {
+                    ApiUrl = reader.ReadLine();
+                }
+            }
+            else
+            {
+                ApiUrl = "";
             }
         }
 
