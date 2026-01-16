@@ -85,10 +85,10 @@ namespace PointOfSale.MVVM
         {
             var categories = new[]
             {
-                new { Name = "Tobak", Color = "SaddleBrown"},
-                new { Name = "Godis", Color = "LightPink"},
-                new { Name = "Enkel mat", Color = "Orange"},
-                new { Name = "Tidningar", Color = "LightBlue"},
+                new { Name = "Tobak", Color = "#8b4513"},
+                new { Name = "Godis", Color = "#ffb6c1"},
+                new { Name = "Enkel mat", Color = "#ffa500"},
+                new { Name = "Tidningar", Color = "#add8e6"},
             };
 
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
