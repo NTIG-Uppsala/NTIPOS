@@ -20,6 +20,7 @@ namespace PointOfSale.ViewModel
         public static ProductsViewModel ProductsVM { get { return productsVm; } }
         public ObservableCollection<Product> Products { get; set; }
         public ObservableCollection<Product> DataGridProducts { get; set; }
+        public List<Category> Categories = new List<Category>();
 
         private bool isLoggedIn;
 
@@ -44,6 +45,7 @@ namespace PointOfSale.ViewModel
                 DatabaseHelper.AddCategories();
                 DatabaseHelper.AddProducts();
             }
+            getAllCategories(DatabaseHelper.connectionString);
             getAllProducts(DatabaseHelper.connectionString);
         }
 
@@ -55,7 +57,7 @@ namespace PointOfSale.ViewModel
             using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                string query = "SELECT *, categoryName, categoryColor FROM products INNER JOIN categories ON products.categoryId=categories.id";
+                string query = "SELECT * FROM products";
 
                 using (SQLiteCommand command = new SQLiteCommand(query, connection))
                 using (SQLiteDataReader reader = command.ExecuteReader())
@@ -65,11 +67,16 @@ namespace PointOfSale.ViewModel
                         Product product = new Product(
                                 reader.GetInt32(reader.GetOrdinal("Id")),
                                 reader.GetString(reader.GetOrdinal("Name")),
-                                reader.GetString(reader.GetOrdinal("CategoryName")),
                                 reader.GetFloat(reader.GetOrdinal("Price")),
-                                reader.GetString(reader.GetOrdinal("CategoryColor")),
-                                reader.GetInt32(reader.GetOrdinal("AmountSold"))
+                                reader.GetInt32(reader.GetOrdinal("AmountSold")),
+                                reader.GetInt32(reader.GetOrdinal("CategoryId"))
                                 );
+
+                        Category productCategory = Categories.Find(x => x.Id == product.CategoryId);
+                        productCategory = productCategory != null ? productCategory : Categories[Categories.Count-1];
+
+                        product.Category = productCategory.Name;
+                        product.Color = productCategory.Color;
 
                         Products.Add(product);
                         DataGridProducts.Add(product);
@@ -78,6 +85,39 @@ namespace PointOfSale.ViewModel
             }
         }
         
+        public void getAllCategories(string connectionString)
+        {
+            Categories.Clear();
+
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string query = "SELECT * FROM categories";
+
+                using (SQLiteCommand command = new SQLiteCommand(query, connection))
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Category category = new Category(
+                                reader.GetInt32(reader.GetOrdinal("Id")),
+                                reader.GetString(reader.GetOrdinal("CategoryName")),
+                                reader.GetString(reader.GetOrdinal("CategoryColor"))
+                                );
+
+                        Categories.Add(category);
+                    }
+                }
+            }
+            Category defaultCategory = new Category(
+                    Categories[Categories.Count-1].Id + 1,
+                    "Övrigt",
+                    "White"
+                    );
+
+            Categories.Add(defaultCategory);
+        }
+
         public void ProductButtonMethod(Product product)
         {
             ArticlesViewModel.ArticlesVM.AddProduct(product);

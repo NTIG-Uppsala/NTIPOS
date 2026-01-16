@@ -99,9 +99,8 @@ namespace PointOfSale.ViewModel
                                 var article = new Article(new Product(
                                             0,
                                             articleReader.GetString(articleReader.GetOrdinal("Name")),
-                                            "",
                                             articleReader.GetFloat(articleReader.GetOrdinal("Price")),
-                                            "Black",
+                                            0,
                                             0
                                             ), articleReader.GetInt32(articleReader.GetOrdinal("Quantity"))
                                 );

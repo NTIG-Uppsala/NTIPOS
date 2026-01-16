@@ -18,6 +18,8 @@ namespace PointOfSale.Model
 
         public string Category { get; set; }
 
+        public int CategoryId { get; set; }
+
         public float Price { get; set; }
         public string PriceFormatted
         {
@@ -54,13 +56,12 @@ namespace PointOfSale.Model
 
         public Brush Color{ get; set; }
 
-        public Product(int id, string productName, string categoryName, float price, string colorString, int amountSold)
+        public Product(int id, string productName, float price, int amountSold, int categoryId)
         {
             Id = id;
             Name = productName;
-            Category = categoryName;
+            CategoryId = categoryId;
             Price = price;
-            Color = (Brush) new BrushConverter().ConvertFromString(colorString);
             AmountSold = amountSold;
             Stock = 100;
         }
