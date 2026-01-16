@@ -49,5 +49,13 @@ namespace PointOfSale.View.UserControls
                 LoginViewModel.LoginVM.SetAPIURL(APIURL);
             }
         }
+
+        private void APIURLInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                SetAPIURLButton_Click(sender, e);
+            }
+        }
     }
 }

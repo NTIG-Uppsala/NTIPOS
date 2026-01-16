@@ -17,6 +17,8 @@
         </Style>
         <Style x:Key="UrlTextStyle" BasedOn="{StaticResource AdornerTextStyle}" TargetType="{x:Type TextBlock}">
             <Setter Property="Foreground" Value="ForestGreen" />
+            <Setter Property="Width" Value="auto" />
+            <Setter Property="TextAlignment" Value="Left" />
         </Style>
     </UserControl.Resources>
     <Grid>
@@ -96,13 +98,19 @@
             </Button>
         </StackPanel>
 
-        <StackPanel Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Right" Orientation="Horizontal">
-            <StackPanel >
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
                 <TextBlock Text="Produktdatabas-URL" TextWrapping="Wrap"/>
-                <TextBox x:Name="APIURLInput" Height="60" Width="400" VerticalContentAlignment="Center" Text=""
-                         adorners:Watermark.Text="{Binding ApiUrl}" adorners:Watermark.TextStyle="{StaticResource UrlTextStyle}" adorners:Watermark.VisibleWhen="Empty"/>
+                <TextBox x:Name="APIURLInput" Height="60" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" KeyDown="APIURLInput_KeyDown"
+                adorners:Watermark.Text="{Binding ApiUrl}" adorners:Watermark.TextStyle="{StaticResource UrlTextStyle}" adorners:Watermark.VisibleWhen="Empty"/>
             </StackPanel>
-            <Button Name="SetAPIURLButton" FontWeight="SemiBold" Width="200" Height="60" FontSize="30" Background="ForestGreen" Click="SetAPIURLButton_Click" VerticalAlignment="Bottom">
+
+            <Button Grid.Column="1" Name="SetAPIURLButton" FontWeight="SemiBold" Width="200" Height="60" FontSize="30" Background="ForestGreen" Click="SetAPIURLButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Background" Value="Transparent"/>
@@ -121,6 +129,6 @@
                     <TextBlock TextWrapping="WrapWithOverflow" VerticalAlignment="Center" TextAlignment="Center" Text="Sätt API URL"/>
                 </Grid>
             </Button>
-        </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>
