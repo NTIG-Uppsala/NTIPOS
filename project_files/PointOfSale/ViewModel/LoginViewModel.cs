@@ -92,6 +92,7 @@ namespace PointOfSale.ViewModel
         public void SetAPIURL(string APIURL)
         {
             ApiUrl = APIURL;
+            ApiUrl = ApiUrl.Trim(['/', ' ']);
             using (StreamWriter writer = new StreamWriter(apiUrlFileLocationString, false))
             {
                 writer.WriteLine(ApiUrl);
