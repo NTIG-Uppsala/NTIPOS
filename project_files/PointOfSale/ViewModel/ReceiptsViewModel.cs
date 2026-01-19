@@ -101,6 +101,7 @@ namespace PointOfSale.ViewModel
                                             articleReader.GetString(articleReader.GetOrdinal("Name")),
                                             articleReader.GetFloat(articleReader.GetOrdinal("Price")),
                                             0,
+                                            0,
                                             0
                                             ), articleReader.GetInt32(articleReader.GetOrdinal("Quantity"))
                                 );

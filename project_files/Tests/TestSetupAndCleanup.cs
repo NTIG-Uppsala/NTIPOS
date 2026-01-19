@@ -65,6 +65,7 @@ namespace Tests
                             categoryId INTEGER NOT NULL,
                             price FLOAT NOT NULL,
                             amountSold INTEGER NOT NULL,
+                            stock INTEGER NOT NULL,
                             FOREIGN KEY (categoryId) REFERENCES categories(id)
                     );";
 
@@ -131,22 +132,22 @@ namespace Tests
 
             var products = new[]
             {
-                new { Name = "Marabou Mjölkchoklad 100 g", CategoryID = 1, Price = 25.00 },
-                new { Name = "Daim dubbel", CategoryID = 1, Price = 15.00 },
-                new { Name = "Kexchoklad", CategoryID = 1, Price = 12.00 },
-                new { Name = "Malaco Gott & Blandat 160 g", CategoryID = 1, Price = 28.00 },
+                new { Name = "Marabou Mjölkchoklad 100 g", CategoryID = 2, Price = 25.00, Stock = 100 },
+                new { Name = "Daim dubbel", CategoryID = 2, Price = 15.00, Stock = 100 },
+                new { Name = "Kexchoklad", CategoryID = 2, Price = 12.00, Stock = 100 },
+                new { Name = "Malaco Gott & Blandat 160 g", CategoryID = 2, Price = 28.00, Stock = 100 },
 
-                new { Name = "Korv med bröd", CategoryID = 2, Price = 25.00 },
-                new { Name = "Varm toast (ost & skinka)", CategoryID = 2, Price = 30.00 },
-                new { Name = "Pirog (köttfärs)", CategoryID = 2, Price = 22.00 },
-                new { Name = "Färdig sallad (kyckling)", CategoryID = 2, Price = 49.00 },
-                new { Name = "Panini (mozzarella & pesto)", CategoryID = 2, Price = 45.00 },
+                new { Name = "Korv med bröd", CategoryID = 3, Price = 25.00, Stock = 100 },
+                new { Name = "Varm toast (ost & skinka)", CategoryID = 3, Price = 30.00, Stock = 100 },
+                new { Name = "Pirog (köttfärs)", CategoryID = 3, Price = 22.00, Stock = 100 },
+                new { Name = "Färdig sallad (kyckling)", CategoryID = 3, Price = 49.00, Stock = 100 },
+                new { Name = "Panini (mozzarella & pesto)", CategoryID = 3, Price = 45.00, Stock = 100 },
 
-                new { Name = "Aftonbladet (dagens)", CategoryID = 3, Price = 28.00 },
-                new { Name = "Expressen (dagens)", CategoryID = 3, Price = 28.00 },
-                new { Name = "Illustrerad Vetenskap", CategoryID = 3, Price = 79.00 },
-                new { Name = "Kalle Anka & Co", CategoryID = 3, Price = 45.00 },
-                new { Name = "Allt om Mat", CategoryID = 3, Price = 69.00 },
+                new { Name = "Aftonbladet (dagens)", CategoryID = 4, Price = 28.00, Stock = 100 },
+                new { Name = "Expressen (dagens)", CategoryID = 4, Price = 28.00, Stock = 100 },
+                new { Name = "Illustrerad Vetenskap", CategoryID = 4, Price = 79.00, Stock = 100 },
+                new { Name = "Kalle Anka & Co", CategoryID = 4, Price = 45.00, Stock = 100 },
+                new { Name = "Allt om Mat", CategoryID = 4, Price = 69.00, Stock = 100 },
             };
 
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
@@ -156,13 +157,14 @@ namespace Tests
                 //Adds each and every product from the products array to the database with their required fields
                 using (var tx = connection.BeginTransaction())
                 using (var cmd = new SQLiteCommand(@"
-                            INSERT INTO products(Name, CategoryID, Price, AmountSold)
-                            VALUES (@name, @categoryId, @price, @amountSold)", connection, tx))
+                            INSERT INTO products(Name, CategoryID, Price, AmountSold, Stock)
+                            VALUES (@name, @categoryId, @price, @amountSold, @stock)", connection, tx))
                 {
                     cmd.Parameters.Add(new SQLiteParameter("@name"));
                     cmd.Parameters.Add(new SQLiteParameter("@categoryId"));
                     cmd.Parameters.Add(new SQLiteParameter("@price"));
                     cmd.Parameters.Add(new SQLiteParameter("@amountSold"));
+                    cmd.Parameters.Add(new SQLiteParameter("@stock"));
 
                     foreach (var product in products)
                     {
@@ -170,6 +172,7 @@ namespace Tests
                         cmd.Parameters["@categoryId"].Value = product.CategoryID;
                         cmd.Parameters["@price"].Value = product.Price;
                         cmd.Parameters["@amountSold"].Value = 0;
+                        cmd.Parameters["@stock"].Value = product.Stock;
 
                         cmd.ExecuteNonQuery();
                     }
@@ -218,6 +221,40 @@ namespace Tests
 
                 if (Directory.Exists(tempReceiptsDirectory))
                     Directory.Move(tempReceiptsDirectory, receiptsDirectory);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception occured " + e.Message);
+            }
+        }
+
+        private static readonly string configuration = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/POS/configuration.txt";
+        private static readonly string tempConfiguration = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/POS/tconfiguration.txt";
+
+        public static void ProtectUserConfiguration()
+        {
+            try
+            {
+                if (File.Exists(configuration))
+                    File.Move(configuration, tempConfiguration);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception occured " + e.Message);
+            }
+
+            FileInfo file = new FileInfo(configuration);
+            file.Directory.Create();
+        }
+        public static void RestoreUserConfiguration()
+        {
+            try
+            {
+                if (File.Exists(configuration))
+                    File.Delete(configuration);
+
+                if (File.Exists(tempConfiguration))
+                    File.Move(tempConfiguration, configuration);
             }
             catch (Exception e)
             {

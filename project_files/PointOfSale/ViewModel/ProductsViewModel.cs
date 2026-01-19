@@ -47,6 +47,7 @@ namespace PointOfSale.ViewModel
             }
             getAllCategories(DatabaseHelper.connectionString);
             getAllProducts(DatabaseHelper.connectionString);
+            APIHelper.FetchData();
         }
 
         public void getAllProducts(string connectionString)
@@ -69,7 +70,8 @@ namespace PointOfSale.ViewModel
                                 reader.GetString(reader.GetOrdinal("Name")),
                                 reader.GetFloat(reader.GetOrdinal("Price")),
                                 reader.GetInt32(reader.GetOrdinal("AmountSold")),
-                                reader.GetInt32(reader.GetOrdinal("CategoryId"))
+                                reader.GetInt32(reader.GetOrdinal("CategoryId")),
+                                reader.GetInt32(reader.GetOrdinal("Stock"))
                                 );
 
                         Category productCategory = Categories.Find(x => x.Id == product.CategoryId);
@@ -110,7 +112,7 @@ namespace PointOfSale.ViewModel
                 }
             }
             Category defaultCategory = new Category(
-                    Categories[Categories.Count-1].Id + 1,
+                    0,
                     "Övrigt",
                     "White"
                     );

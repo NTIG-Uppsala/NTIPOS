@@ -22,6 +22,7 @@ namespace Tests
         {
             TestSetupAndCleanup.InitializeTestDatabase();
             TestSetupAndCleanup.ProtectUserReceipts();
+            TestSetupAndCleanup.ProtectUserConfiguration();
 
             application = Application.Launch(applicationPath);
             mainWindow = application.GetMainWindow(new UIA3Automation());
@@ -33,6 +34,7 @@ namespace Tests
         {
             application.Close();
             TestSetupAndCleanup.RestoreReceiptDirectory();
+            TestSetupAndCleanup.RestoreUserConfiguration();
             TestSetupAndCleanup.RemoveTestDatabase();
         }
         [TestMethod]

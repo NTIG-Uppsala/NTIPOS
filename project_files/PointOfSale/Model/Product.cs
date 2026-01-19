@@ -56,14 +56,14 @@ namespace PointOfSale.Model
 
         public Brush Color{ get; set; }
 
-        public Product(int id, string productName, float price, int amountSold, int categoryId)
+        public Product(int id, string productName, float price, int amountSold, int categoryId, int stock)
         {
             Id = id;
             Name = productName;
             CategoryId = categoryId;
             Price = price;
             AmountSold = amountSold;
-            Stock = 100;
+            Stock = stock;
         }
     }
 }

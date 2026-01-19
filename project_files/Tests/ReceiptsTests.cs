@@ -24,6 +24,7 @@ namespace Tests
         {
             TestSetupAndCleanup.InitializeTestDatabase();
             TestSetupAndCleanup.ProtectUserReceipts();
+            TestSetupAndCleanup.ProtectUserConfiguration();
             using (SQLiteConnection connection = new SQLiteConnection(TestSetupAndCleanup.connectionString))
             {
                 connection.Open();
@@ -78,6 +79,7 @@ namespace Tests
             application.Close();
 
             TestSetupAndCleanup.RestoreReceiptDirectory();
+            TestSetupAndCleanup.RestoreUserConfiguration();
             TestSetupAndCleanup.RemoveTestDatabase();
         }
 
