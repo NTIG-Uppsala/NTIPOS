@@ -1,5 +1,7 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text;
+using System.Text.Json;
 using PointOfSale.Model;
 using PointOfSale.ViewModel;
 
@@ -40,6 +42,21 @@ namespace PointOfSale.MVVM
             {
                 System.Diagnostics.Debug.WriteLine("\nException Caught!");
                 System.Diagnostics.Debug.WriteLine("Message : {0} ", e.Message);
+            }
+        }
+
+        public static async Task DecreaseStock()
+        {
+            foreach (var product in ProductsViewModel.ProductsVM.Products)
+            {
+                using StringContent jsonContent = new(JsonSerializer.Serialize(new
+                            {
+                            amount = product.AmountSold
+                            }), Encoding.UTF8,
+                        "application/json");
+
+                await client.PostAsync($"{LoginViewModel.LoginVM.ApiUrl}/products/{product.Id}/stock/remove",
+                        jsonContent);
             }
         }
     }

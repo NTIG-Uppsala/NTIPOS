@@ -125,13 +125,15 @@ namespace PointOfSale.ViewModel
             ArticlesViewModel.ArticlesVM.AddProduct(product);
         }
 
-        public void UpdateStock()
+        public async Task UpdateStock()
         {
-            foreach (Product product in ProductsViewModel.ProductsVM.Products)
-            {
-                product.Stock -= product.AmountSold;
-                DatabaseHelper.ResetAmountSold(product);
-            }
+            await APIHelper.DecreaseStock();
+
+            DatabaseHelper.ClearProducts();
+            DatabaseHelper.ClearCategories();
+            Products.Clear();
+            Categories.Clear();
+            await APIHelper.FetchData();
         }
     }
 }

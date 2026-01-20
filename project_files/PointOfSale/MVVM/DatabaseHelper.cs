@@ -129,7 +129,7 @@ namespace PointOfSale.MVVM
                 }
                 else
                 {
-                    query = @$"INSERT INTO categories (id, categoryName, categoryColor)
+                    query = @$"INSERT INTO categories(id, categoryName, categoryColor)
                         VALUES ({category.id}, '{category.name}', '{category.color}')";
                 }
 
@@ -210,7 +210,12 @@ namespace PointOfSale.MVVM
             foreach (var product in products)
             {
                 string query;
-                if (ProductsViewModel.ProductsVM.Products.First(x => x.Id == product.id) != null)
+                if (ProductsViewModel.ProductsVM.Products.Count == 0)
+                {
+                    query = @$"INSERT INTO products(id, name, categoryId, price, amountSold, stock)
+                        VALUES ({product.id}, '{product.name}', '{product.category}', {product.price}, 0, {product.stock})";
+                }
+                else if (ProductsViewModel.ProductsVM.Products.First(x => x.Id == product.id) != null)
                 {
                     query = @$"UPDATE products 
                         SET Name='{product.name}', CategoryId='{product.category}', price = {product.price}, stock = {product.stock}
@@ -218,8 +223,8 @@ namespace PointOfSale.MVVM
                 }
                 else
                 {
-                    query = @$"INSERT INTO product (id, name, cateogryId, price, amountSold, stock)
-                        VALUES ({product.id}, '{product.name}', '{product.category}, {product.price}, 0, {product.stock})";
+                    query = @$"INSERT INTO products(id, name, categoryId, price, amountSold, stock)
+                        VALUES ({product.id}, '{product.name}', '{product.category}', {product.price}, 0, {product.stock})";
                 }
 
                 using (SQLiteConnection connection = new SQLiteConnection(connectionString))
@@ -232,6 +237,36 @@ namespace PointOfSale.MVVM
                         cmd.ExecuteNonQuery();
                         tx.Commit();
                     }
+                }
+            }
+        }
+
+        public static void ClearProducts()
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (var tx = connection.BeginTransaction())
+                using (var cmd = new SQLiteCommand("DELETE FROM products", connection, tx))
+                {
+                    cmd.ExecuteNonQuery();
+                    tx.Commit();
+                }
+            }
+        }
+
+        public static void ClearCategories()
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (var tx = connection.BeginTransaction())
+                using (var cmd = new SQLiteCommand("DELETE FROM categories", connection, tx))
+                {
+                    cmd.ExecuteNonQuery();
+                    tx.Commit();
                 }
             }
         }
